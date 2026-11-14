@@ -1,0 +1,51 @@
+{
+ "idle": {
+  "frames": [
+   "idle_0",
+   "idle_1",
+   "idle_2",
+   "idle_3",
+   "idle_2",
+   "idle_1"
+  ],
+  "frameRate": 5,
+  "repeat": -1
+ },
+ "walk_down": {
+  "frames": [
+   "walk_down_0",
+   "walk_down_1",
+   "walk_down_2",
+   "walk_down_3"
+  ],
+  "frameRate": 8,
+  "repeat": -1
+ },
+ "walk_up": {
+  "frames": [
+   "walk_up_0",
+   "walk_up_1",
+   "walk_up_2"
+  ],
+  "frameRate": 7,
+  "repeat": -1
+ },
+ "walk_left": {
+  "frames": [
+   "walk_left_0",
+   "walk_left_1",
+   "walk_left_2"
+  ],
+  "frameRate": 8,
+  "repeat": -1
+ },
+ "walk_right": {
+  "frames": [
+   "walk_right_0",
+   "walk_right_1",
+   "walk_right_2"
+  ],
+  "frameRate": 8,
+  "repeat": -1
+ }
+}

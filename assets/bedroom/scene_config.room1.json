@@ -1,0 +1,1099 @@
+{
+ "scene": "SunLightBedroom",
+ "version": "1.9.0",
+ "basedOn": "scene_config.original.json (v1.0.0)",
+ "changes": [
+  "zones[*].approach：新增地板上的觸發點。原本 cat_tower_2.point 在碰撞區內，地板永遠走不到；其他保留原 point 作參考。",
+  "blockedFloorPolygons[1]：補上椅子下方的空隙（原本貓會走進桌椅腳之間，遮擋圖會整塊蓋住貓）。",
+  "blockedFloorPolygons[2]：貓爬架底座改成實際斜邊形狀。",
+  "blockedFloorPolygons[5]：新增貓窩碰撞（原本可直接踩上去）。",
+  "walkArea：新增左右牆與地板交界線，避免走進右側牆角。",
+  "levels：每個平台的落點、R 跳下的落地點、遠近縮放基準。",
+  "pet_bed / tower_1 target 調整為坐進窩內、從洞口探頭的位置。",
+  "lockedHints：靠近還不能直接上去的家具時，提示需要的前置平台。",
+  "v1.2：新增 bookshelf_top（書櫃頂端）平台，可從三樓或書桌跳上去；頂端紙箱用「跳過紙箱」越過。",
+  "v1.2：書桌、床、書櫃頂端改為可行走平台（levels[].walk）；床上避開主人的臉。",
+  "v1.2：背景移除書桌上兩個筆筒（tools/remove_desk_cups.py），desk／chair 遮擋圖同步更新。",
+  "v1.2：zones[].approachFrom / targetFrom：在可行走平台上的觸發範圍與落點；levels[].exitApproach / exitTarget：往下跳的觸發範圍與落點；levels.bed.land 改為多個落地點（取最近）。",
+  "v1.2：zones[].approach 可以是多個圓（取任一個）；床的地板觸發範圍延伸到整個床前緣。",
+  "v1.3：ownerMission — 床鋪近景任務的警覺值參數（Restless／Awake 門檻、上升與下降速度、潛行倍率、近景面板位置）。",
+  "v1.4：missions[] 第一關「在主人腳邊睡覺」；ownerMission 加入預兆門檻（warnAt／peekAt）、偷看時移動的懲罰、在主人身邊停下不會降低警覺值、推倒水杯的聲響。",
+  "v1.5：阿光 baseScale 1.2 → 1.32（約大 10%），腳底碰撞框 40×12 → 44×13；一樓洞口、貓窩的縮放基準調整，避免阿光大過洞口。",
+  "v1.6：套用 Bella 在編輯模式的調整（書桌可走範圍、桌下碰撞沿桌腳、床的可走範圍與主人臉、腳邊範圍、床的觸發與落點、主人臉部半徑）。",
+  "v1.6：修正落點——椅子→書桌 (652,302)→(652,328)、書櫃→書桌 (568,318)→(568,346) 原本在可走範圍外會卡住；床左側落點 (1017,475)→(920,455) 原本在腳邊範圍內；跳過紙箱的落點配合較寬的腳底框外移。",
+  "v1.7：ownerArt 選擇主人近景美術（v2 = 38 格概念總表）；加入臥室大圖的棉被呼吸圖層（assets/bedroom/owner_breathing.webp），和近景 Sleeping 同步。",
+  "v1.8：ownerArt 改用 v3（A 包 38 格＋過渡幀 9 格）；近景 Sleeping 改用呼吸相位同步，幀數不同也能和大圖對齊。",
+  "v1.9：ownerArt 改用 v4（直髮、熊熊印花棉被）。"
+ ],
+ "imageSize": {
+  "width": 1672,
+  "height": 941
+ },
+ "player": {
+  "spawn": {
+   "x": 632,
+   "y": 590
+  },
+  "speed": 185,
+  "depthMode": "feetY",
+  "suggestedDisplayHeight": 97,
+  "baseScale": 1.32,
+  "perspective": {
+   "yFar": 420,
+   "yNear": 941,
+   "far": 0.88,
+   "near": 1.08
+  },
+  "foot": {
+   "w": 44,
+   "h": 13
+  }
+ },
+ "walkArea": {
+  "minX": 12,
+  "maxX": 1660,
+  "maxY": 934,
+  "wallLines": [
+   [
+    [
+     0,
+     628
+    ],
+    [
+     950,
+     374
+    ]
+   ],
+   [
+    [
+     950,
+     374
+    ],
+    [
+     1672,
+     652
+    ]
+   ]
+  ]
+ },
+ "zones": [
+  {
+   "id": "pet_bed",
+   "type": "enter",
+   "label": "爬進貓窩",
+   "point": {
+    "x": 398,
+    "y": 829
+   },
+   "radius": 75,
+   "approach": {
+    "x": 405,
+    "y": 853,
+    "radius": 205
+   },
+   "target": {
+    "x": 405,
+    "y": 906
+   },
+   "level": "pet_bed",
+   "requires": [
+    "floor"
+   ]
+  },
+  {
+   "id": "cat_tower_1",
+   "type": "enter",
+   "label": "鑽進貓爬架一樓",
+   "point": {
+    "x": 265,
+    "y": 661
+   },
+   "radius": 88,
+   "approach": {
+    "x": 250,
+    "y": 815,
+    "radius": 85
+   },
+   "target": {
+    "x": 266,
+    "y": 738
+   },
+   "level": "tower_1",
+   "requires": [
+    "floor"
+   ]
+  },
+  {
+   "id": "cat_tower_2",
+   "type": "jump",
+   "label": "跳上貓爬架二樓",
+   "point": {
+    "x": 198,
+    "y": 544
+   },
+   "radius": 96,
+   "approach": {
+    "x": 408,
+    "y": 650,
+    "radius": 80
+   },
+   "target": {
+    "x": 192,
+    "y": 466
+   },
+   "level": "tower_2",
+   "requires": [
+    "floor",
+    "tower_1"
+   ]
+  },
+  {
+   "id": "cat_tower_3",
+   "type": "jump",
+   "label": "跳上貓爬架三樓",
+   "point": {
+    "x": 120,
+    "y": 310
+   },
+   "radius": 85,
+   "target": {
+    "x": 114,
+    "y": 300
+   },
+   "level": "tower_3",
+   "requires": [
+    "tower_2"
+   ]
+  },
+  {
+   "id": "chair",
+   "type": "jump",
+   "label": "跳上椅子",
+   "point": {
+    "x": 668,
+    "y": 509
+   },
+   "radius": 88,
+   "approach": {
+    "x": 668,
+    "y": 592,
+    "radius": 72
+   },
+   "target": {
+    "x": 666,
+    "y": 418
+   },
+   "level": "chair",
+   "requires": [
+    "floor"
+   ]
+  },
+  {
+   "id": "desk",
+   "type": "jump",
+   "label": "從椅子跳上桌子",
+   "point": {
+    "x": 624,
+    "y": 330
+   },
+   "radius": 110,
+   "target": {
+    "x": 652,
+    "y": 328
+   },
+   "level": "desk",
+   "requires": [
+    "chair"
+   ]
+  },
+  {
+   "id": "bed",
+   "type": "jump",
+   "label": "直接跳上床",
+   "point": {
+    "x": 1002,
+    "y": 680
+   },
+   "radius": 132,
+   "approach": [
+    {
+     "x": 871,
+     "y": 667,
+     "radius": 105
+    },
+    {
+     "x": 1002,
+     "y": 712,
+     "radius": 132
+    },
+    {
+     "x": 1252,
+     "y": 779,
+     "radius": 120
+    },
+    {
+     "x": 1413,
+     "y": 694,
+     "radius": 90
+    }
+   ],
+   "target": [
+    {
+     "x": 920,
+     "y": 455
+    },
+    {
+     "x": 1166,
+     "y": 510
+    },
+    {
+     "x": 1300,
+     "y": 470
+    },
+    {
+     "x": 1380,
+     "y": 488
+    }
+   ],
+   "level": "bed",
+   "requires": [
+    "floor"
+   ]
+  },
+  {
+   "id": "bookshelf_top",
+   "type": "jump",
+   "label": "跳上書櫃頂端",
+   "point": {
+    "x": 230,
+    "y": 112
+   },
+   "radius": 80,
+   "requires": [
+    "tower_3",
+    "desk"
+   ],
+   "target": {
+    "x": 110,
+    "y": 124
+   },
+   "targetFrom": {
+    "tower_3": {
+     "x": 110,
+     "y": 124
+    },
+    "desk": {
+     "x": 352,
+     "y": 112
+    }
+   },
+   "approachFrom": {
+    "desk": {
+     "x": 568,
+     "y": 318,
+     "radius": 48
+    }
+   },
+   "level": "bookshelf_top"
+  },
+  {
+   "id": "shelf_hop_right",
+   "type": "jump",
+   "label": "跳過紙箱",
+   "point": {
+    "x": 170,
+    "y": 121
+   },
+   "radius": 30,
+   "requires": [
+    "bookshelf_top"
+   ],
+   "approachFrom": {
+    "bookshelf_top": {
+     "x": 170,
+     "y": 121,
+     "radius": 28
+    }
+   },
+   "target": {
+    "x": 312,
+    "y": 109
+   },
+   "level": "bookshelf_top"
+  },
+  {
+   "id": "shelf_hop_left",
+   "type": "jump",
+   "label": "跳過紙箱",
+   "point": {
+    "x": 302,
+    "y": 110
+   },
+   "radius": 30,
+   "requires": [
+    "bookshelf_top"
+   ],
+   "approachFrom": {
+    "bookshelf_top": {
+     "x": 302,
+     "y": 110,
+     "radius": 28
+    }
+   },
+   "target": {
+    "x": 160,
+    "y": 122
+   },
+   "level": "bookshelf_top"
+  },
+  {
+   "id": "water",
+   "type": "interact",
+   "label": "推倒水杯（★加分，但很吵）",
+   "point": {
+    "x": 1466,
+    "y": 450
+   },
+   "radius": 75,
+   "requires": [
+    "bed"
+   ],
+   "approachFrom": {
+    "bed": {
+     "x": 1420,
+     "y": 468,
+     "radius": 90
+    }
+   }
+  }
+ ],
+ "blockedFloorPolygons": [
+  [
+   [
+    50,
+    130
+   ],
+   [
+    394,
+    125
+   ],
+   [
+    397,
+    551
+   ],
+   [
+    56,
+    590
+   ]
+  ],
+  [
+   [
+    390,
+    332
+   ],
+   [
+    895,
+    308
+   ],
+   [
+    913,
+    426
+   ],
+   [
+    800,
+    469
+   ],
+   [
+    759,
+    533
+   ],
+   [
+    717,
+    487
+   ],
+   [
+    684,
+    505
+   ],
+   [
+    674,
+    558
+   ],
+   [
+    647,
+    516
+   ],
+   [
+    607,
+    498
+   ],
+   [
+    588,
+    545
+   ],
+   [
+    562,
+    478
+   ],
+   [
+    530,
+    484
+   ],
+   [
+    502,
+    576
+   ],
+   [
+    392,
+    513
+   ]
+  ],
+  [
+   [
+    70,
+    570
+   ],
+   [
+    358,
+    557
+   ],
+   [
+    372,
+    728
+   ],
+   [
+    192,
+    800
+   ],
+   [
+    62,
+    722
+   ]
+  ],
+  [
+   [
+    786,
+    446
+   ],
+   [
+    1396,
+    382
+   ],
+   [
+    1450,
+    650
+   ],
+   [
+    1120,
+    724
+   ],
+   [
+    797,
+    605
+   ]
+  ],
+  [
+   [
+    1398,
+    485
+   ],
+   [
+    1617,
+    486
+   ],
+   [
+    1616,
+    686
+   ],
+   [
+    1396,
+    686
+   ]
+  ],
+  {
+   "ellipse": {
+    "x": 405,
+    "y": 853,
+    "rx": 138,
+    "ry": 72
+   }
+  }
+ ],
+ "levels": {
+  "floor": {
+   "label": "地板"
+  },
+  "pet_bed": {
+   "label": "貓窩",
+   "land": {
+    "x": 588,
+    "y": 862
+   },
+   "refY": 760,
+   "jumpLabel": "爬出貓窩"
+  },
+  "tower_1": {
+   "label": "貓爬架一樓",
+   "land": {
+    "x": 250,
+    "y": 822
+   },
+   "refY": 440,
+   "jumpLabel": "鑽回一樓"
+  },
+  "tower_2": {
+   "label": "貓爬架二樓",
+   "land": {
+    "x": 408,
+    "y": 652
+   },
+   "refY": 800,
+   "jumpLabel": "跳回二樓"
+  },
+  "tower_3": {
+   "label": "貓爬架三樓",
+   "refY": 800
+  },
+  "chair": {
+   "label": "椅子",
+   "land": {
+    "x": 664,
+    "y": 600
+   },
+   "refY": 590,
+   "jumpLabel": "跳回椅子"
+  },
+  "desk": {
+   "label": "書桌",
+   "refY": 570,
+   "jumpLabel": "跳回書桌",
+   "walk": {
+    "polygon": [
+     [
+      475,
+      359
+     ],
+     [
+      685,
+      302
+     ],
+     [
+      673,
+      279
+     ],
+     [
+      745,
+      259
+     ],
+     [
+      838,
+      242
+     ],
+     [
+      893,
+      260
+     ],
+     [
+      917,
+      271
+     ],
+     [
+      802,
+      306
+     ],
+     [
+      767,
+      309
+     ],
+     [
+      768,
+      310
+     ],
+     [
+      595,
+      352
+     ],
+     [
+      499,
+      375
+     ],
+     [
+      495,
+      371
+     ]
+    ],
+    "blocked": [
+     [
+      [
+       570,
+       250
+      ],
+      [
+       659,
+       242
+      ],
+      [
+       672,
+       299
+      ],
+      [
+       587,
+       325
+      ]
+     ],
+     [
+      [
+       771,
+       245
+      ],
+      [
+       855,
+       248
+      ],
+      [
+       856,
+       277
+      ],
+      [
+       810,
+       291
+      ],
+      [
+       770,
+       274
+      ]
+     ]
+    ],
+    "refOffset": 250
+   },
+   "exitApproach": {
+    "chair": {
+     "x": 652,
+     "y": 304,
+     "radius": 52
+    }
+   }
+  },
+  "bed": {
+   "label": "床",
+   "refY": 730,
+   "walk": {
+    "polygon": [
+     [
+      873,
+      488
+     ],
+     [
+      838,
+      470
+     ],
+     [
+      905,
+      415
+     ],
+     [
+      1030,
+      362
+     ],
+     [
+      1140,
+      338
+     ],
+     [
+      1150,
+      302
+     ],
+     [
+      1250,
+      292
+     ],
+     [
+      1398,
+      324
+     ],
+     [
+      1455,
+      400
+     ],
+     [
+      1450,
+      440
+     ],
+     [
+      1415,
+      470
+     ],
+     [
+      1398,
+      525
+     ],
+     [
+      1280,
+      562
+     ],
+     [
+      1122,
+      597
+     ],
+     [
+      1096,
+      586
+     ],
+     [
+      1004,
+      545
+     ]
+    ],
+    "blocked": [
+     [
+      [
+       1223,
+       313
+      ],
+      [
+       1323,
+       286
+      ],
+      [
+       1375,
+       309
+      ],
+      [
+       1378,
+       395
+      ],
+      [
+       1290,
+       400
+      ],
+      [
+       1212,
+       382
+      ]
+     ]
+    ],
+    "refOffset": 130
+   },
+   "land": [
+    {
+     "x": 860,
+     "y": 652
+    },
+    {
+     "x": 1000,
+     "y": 748
+    },
+    {
+     "x": 1140,
+     "y": 768
+    },
+    {
+     "x": 1294,
+     "y": 718
+    },
+    {
+     "x": 1470,
+     "y": 702
+    }
+   ]
+  },
+  "bookshelf_top": {
+   "label": "書櫃頂端",
+   "jumpLabel": "跳回書櫃頂端",
+   "walk": {
+    "polygon": [
+     [
+      58,
+      126
+     ],
+     [
+      66,
+      111
+     ],
+     [
+      330,
+      92
+     ],
+     [
+      388,
+      106
+     ],
+     [
+      392,
+      115
+     ],
+     [
+      58,
+      134
+     ]
+    ],
+    "blocked": [
+     [
+      [
+       184,
+       88
+      ],
+      [
+       288,
+       84
+      ],
+      [
+       288,
+       130
+      ],
+      [
+       184,
+       134
+      ]
+     ]
+    ],
+    "refOffset": 475
+   },
+   "exitApproach": {
+    "tower_3": {
+     "x": 92,
+     "y": 125,
+     "radius": 40
+    },
+    "desk": {
+     "x": 366,
+     "y": 110,
+     "radius": 34
+    }
+   },
+   "exitTarget": {
+    "desk": {
+     "x": 568,
+     "y": 346
+    }
+   }
+  }
+ },
+ "masks": {
+  "caveHole": {
+   "ellipse": {
+    "x": 266,
+    "y": 695,
+    "rx": 50,
+    "ry": 45
+   },
+   "ears": [
+    {
+     "x": 228,
+     "y": 664,
+     "r": 13
+    },
+    {
+     "x": 302,
+     "y": 645,
+     "r": 14
+    }
+   ]
+  },
+  "petBedOuter": {
+   "x": 405,
+   "y": 853,
+   "rx": 146,
+   "ry": 82
+  },
+  "petBedInner": {
+   "x": 410,
+   "y": 855,
+   "rx": 93,
+   "ry": 36
+  }
+ },
+ "occluders": [
+  {
+   "overlay": "pet_bed",
+   "poly": 5,
+   "mask": "petBedOuter"
+  },
+  {
+   "overlay": "cat_tree",
+   "poly": 2
+  },
+  {
+   "overlay": "chair",
+   "poly": 1
+  },
+  {
+   "overlay": "desk",
+   "poly": 1
+  },
+  {
+   "overlay": "bed",
+   "poly": 3
+  },
+  {
+   "overlay": "nightstand",
+   "poly": 4
+  },
+  {
+   "overlay": "bookshelf",
+   "poly": 0
+  }
+ ],
+ "platforms": {
+  "floor": {
+   "exits": [
+    "bed",
+    "chair",
+    "tower_1",
+    "tower_2",
+    "pet_bed"
+   ]
+  },
+  "pet_bed": {
+   "exits": [
+    "floor"
+   ]
+  },
+  "tower_1": {
+   "exits": [
+    "floor",
+    "tower_2"
+   ]
+  },
+  "tower_2": {
+   "exits": [
+    "tower_1",
+    "tower_3",
+    "floor"
+   ]
+  },
+  "tower_3": {
+   "exits": [
+    "tower_2",
+    "bookshelf_top"
+   ]
+  },
+  "chair": {
+   "exits": [
+    "floor",
+    "desk"
+   ]
+  },
+  "desk": {
+   "exits": [
+    "chair",
+    "bookshelf_top"
+   ]
+  },
+  "bed": {
+   "exits": [
+    "floor"
+   ]
+  },
+  "bookshelf_top": {
+   "exits": [
+    "tower_3",
+    "desk"
+   ]
+  }
+ },
+ "lockedHints": [
+  {
+   "zone": "desk",
+   "x": 650,
+   "y": 610,
+   "radius": 150,
+   "text": "書桌要先跳上椅子，才能再跳上去"
+  },
+  {
+   "zone": "cat_tower_3",
+   "x": 300,
+   "y": 760,
+   "radius": 230,
+   "text": "三樓要先到二樓才跳得上去"
+  },
+  {
+   "zone": "water",
+   "x": 1500,
+   "y": 735,
+   "radius": 150,
+   "text": "水杯要先跳上床才碰得到"
+  }
+ ],
+ "ownerMission": {
+  "_note": "主人警覺值參數，未填的欄位用 src/owner.js 的 OWNER_MISSION_DEFAULTS",
+  "warnAt": 25,
+  "restlessAt": 35,
+  "peekAt": 70,
+  "failAt": 100,
+  "restlessCooldown": 2.2,
+  "peekCooldown": 4,
+  "gain": {
+   "walk": 9,
+   "walkNearFace": 30,
+   "land": 14,
+   "leave": 6,
+   "cup": 35,
+   "peekWatch": 40
+  },
+  "sneakFactor": 0.3,
+  "decay": {
+   "nearOwnerIdle": 0,
+   "onBedIdle": 3,
+   "sleeping": 4,
+   "offBed": 12
+  },
+  "face": {
+   "x": 1292,
+   "y": 342,
+   "radius": 151
+  },
+  "nearOwnerRadius": 223,
+  "lens": {
+   "x": 1500,
+   "y": 170,
+   "rCalm": 74,
+   "rAlert": 116
+  }
+ },
+ "missions": [
+  {
+   "id": "feet_nap",
+   "title": "偷偷在主人腳邊睡覺",
+   "steps": [
+    {
+     "id": "onBed",
+     "text": "跳上主人的床"
+    },
+    {
+     "id": "reachFeet",
+     "text": "潛行到主人的腳邊"
+    },
+    {
+     "id": "nap",
+     "text": "在腳邊安靜待著"
+    }
+   ],
+   "bonus": [
+    {
+     "id": "cup",
+     "text": "推倒床頭的水杯",
+     "points": 80
+    }
+   ],
+   "feetZone": {
+    "x": 1055,
+    "y": 462,
+    "rx": 58,
+    "ry": 28
+   },
+   "napSeconds": 5,
+   "rewards": {
+    "base": 100,
+    "quiet": 50,
+    "calm": 20
+   },
+   "titles": {
+    "base": "腳邊小暖爐",
+    "quiet": "無聲的毛球",
+    "cup": "床頭搗蛋王"
+   }
+  }
+ ],
+ "ownerArt": "v4"
+}

@@ -1,0 +1,285 @@
+{
+ "anchor": [
+  256,
+  256
+ ],
+ "frameSize": 512,
+ "columns": 4,
+ "sets": {
+  "sleeping": {
+   "frames": [
+    {
+     "frame": 0,
+     "file": "sleeping_00",
+     "fixed": false
+    },
+    {
+     "frame": 1,
+     "file": "sleeping_01",
+     "fixed": false
+    },
+    {
+     "frame": 2,
+     "file": "sleeping_02",
+     "fixed": false
+    },
+    {
+     "frame": 3,
+     "file": "sleeping_03",
+     "fixed": false
+    },
+    {
+     "frame": 4,
+     "file": "sleeping_03b",
+     "fixed": false
+    },
+    {
+     "frame": 5,
+     "file": "sleeping_04",
+     "fixed": false
+    },
+    {
+     "frame": 6,
+     "file": "sleeping_05",
+     "fixed": false
+    },
+    {
+     "frame": 7,
+     "file": "sleeping_06",
+     "fixed": false
+    },
+    {
+     "frame": 8,
+     "file": "sleeping_06b",
+     "fixed": false
+    },
+    {
+     "frame": 9,
+     "file": "sleeping_07",
+     "fixed": false
+    }
+   ]
+  },
+  "restless": {
+   "frames": [
+    {
+     "frame": 0,
+     "file": "restless_00",
+     "fixed": false
+    },
+    {
+     "frame": 1,
+     "file": "restless_01",
+     "fixed": false
+    },
+    {
+     "frame": 2,
+     "file": "restless_02",
+     "fixed": false
+    },
+    {
+     "frame": 3,
+     "file": "restless_03",
+     "fixed": false
+    },
+    {
+     "frame": 4,
+     "file": "restless_tween_a_00",
+     "fixed": true,
+     "scale": 1.266,
+     "translate": [
+      -57.2,
+      -83.5
+     ],
+     "matchScore": 0.843
+    },
+    {
+     "frame": 5,
+     "file": "restless_tween_a_01",
+     "fixed": true,
+     "scale": 1.22,
+     "translate": [
+      -52.8,
+      -51.1
+     ],
+     "matchScore": 0.831
+    },
+    {
+     "frame": 6,
+     "file": "restless_04",
+     "fixed": false
+    },
+    {
+     "frame": 7,
+     "file": "restless_05",
+     "fixed": false
+    },
+    {
+     "frame": 8,
+     "file": "restless_06",
+     "fixed": false
+    },
+    {
+     "frame": 9,
+     "file": "restless_07",
+     "fixed": false
+    },
+    {
+     "frame": 10,
+     "file": "restless_tween_b_00",
+     "fixed": true,
+     "scale": 1.19,
+     "translate": [
+      -31.7,
+      -50.3
+     ],
+     "matchScore": 0.848
+    },
+    {
+     "frame": 11,
+     "file": "restless_tween_b_01",
+     "fixed": true,
+     "scale": 1.235,
+     "translate": [
+      -43.2,
+      -75.4
+     ],
+     "matchScore": 0.863
+    },
+    {
+     "frame": 12,
+     "file": "restless_08",
+     "fixed": false
+    },
+    {
+     "frame": 13,
+     "file": "restless_09",
+     "fixed": false
+    },
+    {
+     "frame": 14,
+     "file": "restless_10",
+     "fixed": false
+    },
+    {
+     "frame": 15,
+     "file": "restless_11",
+     "fixed": false
+    }
+   ]
+  },
+  "peek": {
+   "frames": [
+    {
+     "frame": 0,
+     "file": "peek_00",
+     "fixed": false
+    },
+    {
+     "frame": 1,
+     "file": "peek_01",
+     "fixed": false
+    },
+    {
+     "frame": 2,
+     "file": "peek_02",
+     "fixed": false
+    },
+    {
+     "frame": 3,
+     "file": "peek_03",
+     "fixed": false
+    },
+    {
+     "frame": 4,
+     "file": "peek_04",
+     "fixed": false
+    },
+    {
+     "frame": 5,
+     "file": "peek_05",
+     "fixed": false
+    },
+    {
+     "frame": 6,
+     "file": "peek_06",
+     "fixed": false
+    },
+    {
+     "frame": 7,
+     "file": "peek_07",
+     "fixed": false
+    }
+   ]
+  },
+  "awake": {
+   "frames": [
+    {
+     "frame": 0,
+     "file": "awake_00",
+     "fixed": false
+    },
+    {
+     "frame": 1,
+     "file": "awake_01",
+     "fixed": false
+    },
+    {
+     "frame": 2,
+     "file": "awake_02",
+     "fixed": false
+    },
+    {
+     "frame": 3,
+     "file": "awake_03",
+     "fixed": false
+    },
+    {
+     "frame": 4,
+     "file": "awake_04",
+     "fixed": false
+    },
+    {
+     "frame": 5,
+     "file": "awake_05",
+     "fixed": false
+    },
+    {
+     "frame": 6,
+     "file": "awake_tween_00",
+     "fixed": false
+    },
+    {
+     "frame": 7,
+     "file": "awake_tween_01",
+     "fixed": false
+    },
+    {
+     "frame": 8,
+     "file": "awake_tween_02",
+     "fixed": false
+    },
+    {
+     "frame": 9,
+     "file": "awake_06",
+     "fixed": false
+    },
+    {
+     "frame": 10,
+     "file": "awake_07",
+     "fixed": false
+    },
+    {
+     "frame": 11,
+     "file": "awake_08",
+     "fixed": false
+    },
+    {
+     "frame": 12,
+     "file": "awake_09",
+     "fixed": false
+    }
+   ]
+  }
+ }
+}

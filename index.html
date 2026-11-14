@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>阿光的秘密任務</title>
+<meta name="description" content="一隻叫阿光的貓，趁主人睡著時偷偷溜到她腳邊睡覺。別吵醒她！">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f6f1ea; --card: #fffdf9; --ink: #3d332e; --muted: #8a7a6e;
+    --line: #e6dccf; --accent: #c98a5e; --chip: #f1e8dc;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1f1d22; --card: #2a272d; --ink: #f0e8df; --muted: #b0a396;
+      --line: #3b363d; --accent: #d79b6f; --chip: #35303a;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1f1d22; --card: #2a272d; --ink: #f0e8df; --muted: #b0a396;
+    --line: #3b363d; --accent: #d79b6f; --chip: #35303a;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font-family: "Zen Maru Gothic", "Noto Sans TC", sans-serif; }
+  main { max-width: 1120px; margin: 0 auto; padding: 32px 16px 20px; }
+  header { margin-bottom: 18px; }
+  .eyebrow { font-size: 13px; letter-spacing: .12em; color: var(--accent); margin: 0 0 6px; }
+  h1 { font-size: 28px; margin: 0 0 6px; letter-spacing: .06em; }
+  p.lead { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.7; }
+  #game { width: 100%; aspect-ratio: 1672 / 941; border-radius: 16px; overflow: hidden;
+    border: 1px solid var(--line); background: #f4efe8; }
+  #game canvas { display: block; }
+  .hint { margin: 10px 2px 0; font-size: 13px; color: var(--muted); }
+  .grid { margin-top: 18px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  @media (max-width: 860px) { .grid { grid-template-columns: 1fr; } }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; font-size: 14px; line-height: 1.75; }
+  .card h2 { font-size: 15px; margin: 0 0 8px; }
+  ol, ul { margin: 0; padding-left: 20px; }
+  li + li { margin-top: 2px; }
+  kbd { font-family: inherit; background: var(--chip); border: 1px solid var(--line); border-radius: 6px; padding: 0 6px; font-size: 12px; }
+  .muted { color: var(--muted); }
+  .touch-note { display: none; margin-top: 10px; padding: 10px 14px; border-radius: 12px; background: var(--chip); font-size: 13px; }
+  @media (hover: none) and (pointer: coarse) { .touch-note { display: block; } }
+  footer { text-align: center; color: var(--muted); font-size: 12px; padding: 26px 0 8px; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">第一關</p>
+    <h1>阿光的秘密任務</h1>
+    <p class="lead">深夜，主人睡得正熟。小貓阿光想偷偷溜到她腳邊，窩著一起睡——但千萬別把她吵醒。</p>
+  </header>
+
+  <div id="game"></div>
+  <p class="hint">先點一下畫面，再用鍵盤操作。</p>
+  <p class="touch-note">這個遊戲需要鍵盤，請用電腦開啟。</p>
+
+  <div class="grid">
+    <section class="card">
+      <h2>任務：偷偷在主人腳邊睡覺</h2>
+      <ol>
+        <li>跳上主人的床</li>
+        <li>悄悄走到她的腳邊</li>
+        <li>在腳邊安靜待 5 秒，睡著就成功</li>
+      </ol>
+      <p class="muted" style="margin:8px 0 0">★ 加分：把床頭櫃上的杯子推下去（但很吵）</p>
+    </section>
+    <section class="card">
+      <h2>操作</h2>
+      <ul>
+        <li><kbd>WASD</kbd>／方向鍵：走路</li>
+        <li><kbd>Shift</kbd>：潛行，走得慢但比較安靜</li>
+        <li><kbd>Space</kbd>：跳上家具；平台上按方向鍵＋<kbd>Space</kbd> 往那邊跳</li>
+        <li><kbd>E</kbd>：推東西</li>
+        <li><kbd>Tab</kbd>：打開任務卡</li>
+      </ul>
+    </section>
+    <section class="card">
+      <h2>小心主人的預兆</h2>
+      <ul>
+        <li>Zzz 停了：主人開始有感覺</li>
+        <li>翻來覆去：再吵一點就危險了</li>
+        <li>瞇眼偷看：這時候千萬別動</li>
+        <li>醒來：任務失敗，按 <kbd>Space</kbd> 重來</li>
+      </ul>
+    </section>
+  </div>
+  <footer>Bella Chen</footer>
+</main>
+
+<script>window.SUNLIGHT_MODE = 'play'; window.SUNLIGHT_DROP_ARTS = ['v1', 'v2', 'v3', 'v4'];</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.80.1/phaser.min.js"></script>
+<!--INLINE_ASSETS-->
+<script src="assets/sunlight_inline.js"></script>
+<script src="assets/bedroom/bedroom_inline.js"></script>
+<script src="assets/owner_v5/owner_v5_inline.js"></script>
+<!--/INLINE_ASSETS-->
+<script src="src/sunlight.js"></script>
+<script src="src/scenes.js"></script>
+<script src="src/owner.js"></script>
+<script src="src/AlertSystem.js"></script>
+<script src="src/MissionManager.js"></script>
+<script src="src/MissionHUD.js"></script>
+<script src="src/BedroomScene.js"></script>
+<script>
+  (async () => {
+    try { await document.fonts.load('16px "Zen Maru Gothic"'); } catch (e) {}
+    const game = new Phaser.Game({
+      type: Phaser.AUTO, parent: 'game', width: 1672, height: 941,
+      backgroundColor: '#f4efe8', roundPixels: false,
+      scale: { mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_HORIZONTALLY },
+      scene: [BedroomScene],
+    });
+    game.registry.set('debug', false);
+    game.registry.set('editor', false);
+    window.__game = game;
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>阿光開發版</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f6f1ea; --card: #fffdf9; --ink: #3d332e; --muted: #8a7a6e;
+    --line: #e6dccf; --accent: #c98a5e; --accent-ink: #fff; --chip: #f1e8dc;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1f1d22; --card: #2a272d; --ink: #f0e8df; --muted: #b0a396;
+      --line: #3b363d; --accent: #d79b6f; --accent-ink: #1f1d22; --chip: #35303a;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1f1d22; --card: #2a272d; --ink: #f0e8df; --muted: #b0a396;
+    --line: #3b363d; --accent: #d79b6f; --accent-ink: #1f1d22; --chip: #35303a;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font-family: "Zen Maru Gothic", "Noto Sans TC", sans-serif; }
+  main { max-width: 1120px; margin: 0 auto; padding: 28px 16px 20px; }
+  h1 { font-size: 22px; margin: 0 0 4px; letter-spacing: .04em; }
+  p.sub { margin: 0 0 18px; color: var(--muted); font-size: 14px; }
+  .bar { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; align-items: center; }
+  .bar button { font: inherit; font-size: 14px; padding: 8px 16px; border-radius: 999px;
+    border: 1px solid var(--line); background: var(--card); color: var(--ink); cursor: pointer; }
+  .bar button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  .bar .spacer { flex: 1; }
+  #game { width: 100%; aspect-ratio: 1672 / 941; border-radius: 14px; overflow: hidden;
+    border: 1px solid var(--line); background: #f4efe8; }
+  #game canvas { display: block; }
+  .grid { margin-top: 16px; display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 12px; }
+  @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; font-size: 13px; line-height: 1.65; }
+  .card h2 { font-size: 14px; margin: 0 0 8px; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; padding: 6px 4px; border-bottom: 1px solid var(--line); }
+  th { color: var(--muted); font-weight: 500; }
+  kbd { font-family: inherit; background: var(--chip); border: 1px solid var(--line); border-radius: 6px; padding: 0 6px; font-size: 12px; }
+  ul { margin: 0; padding-left: 18px; color: var(--muted); }
+  footer { text-align: center; color: var(--muted); font-size: 12px; padding: 22px 0 8px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>阿光的秘密任務 · 臥室互動</h1>
+  <p class="sub">開發版：點一下畫面後操作。數字鍵 1／2／3 切換場景，B 開關 Debug，M 編輯碰撞。公開給玩家的版本是 <a href="index.html">index.html</a>。</p>
+  <div class="bar" role="group" aria-label="場景">
+    <button data-scene="BedroomScene" aria-pressed="true">② 夜晚臥室互動</button>
+    <button data-scene="OwnerTest" aria-pressed="false">③ 主人動畫測試</button>
+    <button data-scene="MovementTest" aria-pressed="false">① 移動測試</button>
+    <span class="spacer"></span>
+    <button id="edit" aria-pressed="false">編輯碰撞</button>
+    <button id="dbg" aria-pressed="false">Debug：關</button>
+  </div>
+  <div id="game"></div>
+  <div class="grid">
+    <div class="card">
+      <h2>家具互動規則（scene_config.json）</h2>
+      <table>
+        <thead><tr><th>家具</th><th>互動</th><th>前置條件</th></tr></thead>
+        <tbody>
+          <tr><td>貓窩</td><td>爬進去</td><td>地板</td></tr>
+          <tr><td>貓爬架一樓</td><td>鑽進洞口</td><td>地板</td></tr>
+          <tr><td>貓爬架二樓</td><td>跳上平台</td><td>地板或一樓</td></tr>
+          <tr><td>貓爬架三樓</td><td>跳上平台</td><td>必須先到二樓</td></tr>
+          <tr><td>椅子</td><td>跳上去</td><td>地板</td></tr>
+          <tr><td>書桌</td><td>跳上去、可在桌上走</td><td>必須先到椅子</td></tr>
+          <tr><td>床</td><td>跳上去、可在床上走（避開主人的臉）</td><td>地板</td></tr>
+          <tr><td>書櫃頂端</td><td>跳上去、可在上面走（紙箱用 Space 跳過）</td><td>三樓或書桌</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <h2>操作</h2>
+      <ul>
+        <li><kbd>WASD</kbd>／方向鍵 移動</li>
+        <li><kbd>Space</kbd> 跳躍：地板上跳上最近的家具；平台上能往上就往上</li>
+        <li>書桌、床、書櫃頂端可以走動，走到邊緣附近按 <kbd>Space</kbd> 跳到下一個地方</li>
+        <li>平台上 <kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> + <kbd>Space</kbd> 往那個方向跳下去（光環會先標出落點）</li>
+        <li><kbd>E</kbd> 物品互動（例如床上推倒水杯）</li>
+        <li><kbd>Shift</kbd> 潛行：走得比較慢，在床上比較不會吵醒主人</li>
+        <li>第一關「偷偷在主人腳邊睡覺」：跳上床 → 潛行到腳邊 → 安靜待 5 秒；★ 推倒水杯可以加分</li>
+        <li>主人的預兆：25% Zzz 停止 → 35% 翻身 → 70% 瞇眼偷看（這時候別動）→ 100% 驚醒＝失敗</li>
+        <li><kbd>Tab</kbd> 展開任務卡（平常收合在左上角，阿光靠近會自動變淡）</li>
+        <li><kbd>B</kbd> Debug：碰撞、觸發範圍、落點、遮擋圖；點畫面可記錄座標</li>
+        <li><kbd>M</kbd> 編輯模式：直接拖曳碰撞、可走範圍、腳邊範圍、觸發圈與落點，改完「匯出」新的設定檔</li>
+      </ul>
+    </div>
+  </div>
+  <footer>Bella Chen 2026/11/10</footer>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.80.1/phaser.min.js"></script>
+<!--INLINE_ASSETS-->
+<script src="assets/sunlight_inline.js"></script>
+<script src="assets/bedroom/bedroom_inline.js"></script>
+<script src="assets/owner/owner_inline.js"></script>
+<script src="assets/owner_v2/owner_v2_inline.js"></script>
+<script src="assets/owner_v3/owner_v3_inline.js"></script>
+<script src="assets/owner_v4/owner_v4_inline.js"></script>
+<script src="assets/owner_v5/owner_v5_inline.js"></script>
+<!--/INLINE_ASSETS-->
+<script src="src/sunlight.js"></script>
+<script src="src/scenes.js"></script>
+<script src="src/owner.js"></script>
+<script src="src/AlertSystem.js"></script>
+<script src="src/MissionManager.js"></script>
+<script src="src/MissionHUD.js"></script>
+<script src="src/LayoutEditor.js"></script>
+<script src="src/BedroomScene.js"></script>
+<script src="src/OwnerTest.js"></script>
+<script>
+  (async () => {
+    try { await document.fonts.load('16px "Zen Maru Gothic"'); } catch (e) {}
+    const game = new Phaser.Game({
+      type: Phaser.AUTO, parent: 'game', width: 1672, height: 941,
+      backgroundColor: '#f4efe8', roundPixels: false,
+      scale: { mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_HORIZONTALLY },
+      scene: [BedroomScene, OwnerTest, MovementTest],
+    });
+    game.registry.set('debug', false);
+    const btns = [...document.querySelectorAll('[data-scene]')];
+    const dbg = document.getElementById('dbg');
+    const syncDbg = () => { const on = !!game.registry.get('debug'); dbg.textContent = 'Debug：' + (on ? '開' : '關'); dbg.setAttribute('aria-pressed', String(on)); };
+    game.registry.events.on('changedata-debug', syncDbg);
+    dbg.addEventListener('click', () => game.registry.set('debug', !game.registry.get('debug')));
+    const edit = document.getElementById('edit');
+    game.registry.set('editor', false);
+    game.registry.events.on('changedata-editor', (_, v) => { edit.setAttribute('aria-pressed', String(!!v)); edit.textContent = v ? '離開編輯' : '編輯碰撞'; });
+    edit.addEventListener('click', () => {
+      if (!game.scene.isActive('BedroomScene')) go('BedroomScene');
+      game.registry.set('editor', !game.registry.get('editor'));
+    });
+    const go = (key) => {
+      game.scene.getScenes(true).forEach(s => { if (s.scene.key !== key) game.scene.stop(s.scene.key); });
+      game.scene.start(key);
+      btns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.scene === key)));
+    };
+    btns.forEach(b => b.addEventListener('click', () => go(b.dataset.scene)));
+    window.addEventListener('keydown', e => {
+      if (game.registry.get('editor')) return;   // 編輯模式裡 1–8 是切換圖層
+      if (e.key === '1') go('MovementTest');
+      if (e.key === '2') go('BedroomScene');
+      if (e.key === '3') go('OwnerTest');
+    });
+    window.__game = game;
+  })();
+</script>
+</body>
+</html>

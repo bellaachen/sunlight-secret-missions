@@ -1,0 +1,415 @@
+{
+ "anchor": [
+  155.0,
+  110.0
+ ],
+ "frameWidth": 256,
+ "frameHeight": 192,
+ "sets": {
+  "sleeping": {
+   "setScale": 1.0,
+   "frames": [
+    {
+     "frame": 0,
+     "matchScore": 1.0,
+     "faceBefore": [
+      155.0,
+      110.0
+     ],
+     "scale": 1.0,
+     "translate": [
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "frame": 1,
+     "matchScore": 0.984,
+     "faceBefore": [
+      155.0,
+      110.0
+     ],
+     "scale": 1.0,
+     "translate": [
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "frame": 2,
+     "matchScore": 0.979,
+     "faceBefore": [
+      154.0,
+      110.0
+     ],
+     "scale": 1.0,
+     "translate": [
+      1.0,
+      0.0
+     ]
+    },
+    {
+     "frame": 3,
+     "matchScore": 0.937,
+     "faceBefore": [
+      152.0,
+      103.0
+     ],
+     "scale": 1.0,
+     "translate": [
+      3.0,
+      7.0
+     ]
+    },
+    {
+     "frame": 4,
+     "matchScore": 0.93,
+     "faceBefore": [
+      152.0,
+      104.0
+     ],
+     "scale": 1.0,
+     "translate": [
+      3.0,
+      6.0
+     ]
+    },
+    {
+     "frame": 5,
+     "matchScore": 0.986,
+     "faceBefore": [
+      154.0,
+      110.0
+     ],
+     "scale": 1.0,
+     "translate": [
+      1.0,
+      0.0
+     ]
+    },
+    {
+     "frame": 6,
+     "matchScore": 0.985,
+     "faceBefore": [
+      153.5,
+      110.5
+     ],
+     "scale": 1.0,
+     "translate": [
+      1.5,
+      -0.5
+     ]
+    },
+    {
+     "frame": 7,
+     "matchScore": 0.981,
+     "faceBefore": [
+      153.0,
+      110.0
+     ],
+     "scale": 1.0,
+     "translate": [
+      2.0,
+      0.0
+     ]
+    }
+   ]
+  },
+  "restless": {
+   "setScale": 1.06,
+   "frames": [
+    {
+     "frame": 0,
+     "matchScore": 0.976,
+     "faceBefore": [
+      161.5,
+      112.0
+     ],
+     "scale": 0.9434,
+     "translate": [
+      2.6,
+      4.3
+     ]
+    },
+    {
+     "frame": 1,
+     "matchScore": 0.973,
+     "faceBefore": [
+      160.0,
+      113.0
+     ],
+     "scale": 0.9434,
+     "translate": [
+      4.1,
+      3.4
+     ]
+    },
+    {
+     "frame": 2,
+     "matchScore": 0.968,
+     "faceBefore": [
+      162.5,
+      112.5
+     ],
+     "scale": 0.9434,
+     "translate": [
+      1.7,
+      3.9
+     ]
+    },
+    {
+     "frame": 3,
+     "matchScore": 0.958,
+     "faceBefore": [
+      164.0,
+      113.0
+     ],
+     "scale": 0.9434,
+     "translate": [
+      0.3,
+      3.4
+     ]
+    },
+    {
+     "frame": 4,
+     "matchScore": 0.959,
+     "faceBefore": [
+      164.5,
+      112.5
+     ],
+     "scale": 0.9434,
+     "translate": [
+      -0.2,
+      3.9
+     ]
+    },
+    {
+     "frame": 5,
+     "matchScore": 0.949,
+     "faceBefore": [
+      163.0,
+      113.0
+     ],
+     "scale": 0.9434,
+     "translate": [
+      1.2,
+      3.4
+     ]
+    },
+    {
+     "frame": 6,
+     "matchScore": 0.964,
+     "faceBefore": [
+      166.5,
+      109.5
+     ],
+     "scale": 0.9434,
+     "translate": [
+      -2.1,
+      6.7
+     ]
+    },
+    {
+     "frame": 7,
+     "matchScore": 0.912,
+     "faceBefore": [
+      173.5,
+      107.5
+     ],
+     "scale": 0.9434,
+     "translate": [
+      -8.7,
+      8.6
+     ]
+    },
+    {
+     "frame": 8,
+     "matchScore": 0.882,
+     "faceBefore": [
+      178.5,
+      106.5
+     ],
+     "scale": 0.9434,
+     "translate": [
+      -13.4,
+      9.5
+     ]
+    },
+    {
+     "frame": 9,
+     "matchScore": 0.893,
+     "faceBefore": [
+      179.0,
+      110.0
+     ],
+     "scale": 0.9434,
+     "translate": [
+      -13.9,
+      6.2
+     ]
+    },
+    {
+     "frame": 10,
+     "matchScore": 0.901,
+     "faceBefore": [
+      180.5,
+      111.5
+     ],
+     "scale": 0.9434,
+     "translate": [
+      -15.3,
+      4.8
+     ]
+    },
+    {
+     "frame": 11,
+     "matchScore": 0.936,
+     "faceBefore": [
+      175.5,
+      111.5
+     ],
+     "scale": 0.9434,
+     "translate": [
+      -10.6,
+      4.8
+     ]
+    }
+   ]
+  },
+  "awake": {
+   "setScale": 0.905,
+   "frames": [
+    {
+     "frame": 0,
+     "matchScore": 0.881,
+     "faceBefore": [
+      156.0,
+      106.5
+     ],
+     "scale": 1.105,
+     "translate": [
+      -17.4,
+      -7.7
+     ]
+    },
+    {
+     "frame": 1,
+     "matchScore": 0.879,
+     "faceBefore": [
+      155.0,
+      106.5
+     ],
+     "scale": 1.105,
+     "translate": [
+      -16.3,
+      -7.7
+     ]
+    },
+    {
+     "frame": 2,
+     "matchScore": 0.872,
+     "faceBefore": [
+      151.5,
+      106.0
+     ],
+     "scale": 1.105,
+     "translate": [
+      -12.4,
+      -7.1
+     ]
+    },
+    {
+     "frame": 3,
+     "matchScore": 0.863,
+     "faceBefore": [
+      150.5,
+      105.0
+     ],
+     "scale": 1.105,
+     "translate": [
+      -11.3,
+      -6.0
+     ]
+    },
+    {
+     "frame": 4,
+     "matchScore": 0.832,
+     "faceBefore": [
+      153.0,
+      105.5
+     ],
+     "scale": 1.105,
+     "translate": [
+      -14.1,
+      -6.6
+     ]
+    },
+    {
+     "frame": 5,
+     "matchScore": 0.818,
+     "faceBefore": [
+      153.0,
+      105.5
+     ],
+     "scale": 1.105,
+     "translate": [
+      -14.1,
+      -6.6
+     ]
+    },
+    {
+     "frame": 6,
+     "matchScore": 0.816,
+     "faceBefore": [
+      150.0,
+      105.5
+     ],
+     "scale": 1.105,
+     "translate": [
+      -10.7,
+      -6.6
+     ]
+    },
+    {
+     "frame": 7,
+     "matchScore": 0.781,
+     "faceBefore": [
+      152.5,
+      93.5
+     ],
+     "scale": 1.105,
+     "translate": [
+      -10.7,
+      -6.6
+     ]
+    },
+    {
+     "frame": 8,
+     "matchScore": 0.764,
+     "faceBefore": [
+      159.0,
+      69.0
+     ],
+     "scale": 1.105,
+     "translate": [
+      -10.7,
+      -6.6
+     ]
+    },
+    {
+     "frame": 9,
+     "matchScore": 0.767,
+     "faceBefore": [
+      159.0,
+      67.0
+     ],
+     "scale": 1.105,
+     "translate": [
+      -10.7,
+      -6.6
+     ]
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,313 @@
+{
+  "scene": "SunLightBedroom",
+  "version": "1.0.0",
+  "imageSize": {
+    "width": 1672,
+    "height": 941
+  },
+  "notes": "Screen-space 2D scene. Coordinates refer to the approved 1672x941 background. Overlays are polygon masks from the flattened art; not fully isolated furniture.",
+  "player": {
+    "spawn": {
+      "x": 632,
+      "y": 580
+    },
+    "speed": 185,
+    "depthMode": "feetY",
+    "suggestedDisplayHeight": 88
+  },
+  "zones": [
+    {
+      "id": "pet_bed",
+      "type": "enter",
+      "label": "爬進貓窩",
+      "point": {
+        "x": 398,
+        "y": 829
+      },
+      "radius": 75,
+      "target": {
+        "x": 401,
+        "y": 825
+      },
+      "level": "pet_bed"
+    },
+    {
+      "id": "cat_tower_1",
+      "type": "enter",
+      "label": "鑽進貓爬架一樓",
+      "point": {
+        "x": 265,
+        "y": 661
+      },
+      "radius": 88,
+      "target": {
+        "x": 261,
+        "y": 673
+      },
+      "level": "tower_1"
+    },
+    {
+      "id": "cat_tower_2",
+      "type": "jump",
+      "label": "跳上貓爬架二樓",
+      "point": {
+        "x": 198,
+        "y": 544
+      },
+      "radius": 96,
+      "target": {
+        "x": 192,
+        "y": 462
+      },
+      "level": "tower_2",
+      "requires": [
+        "floor",
+        "tower_1"
+      ]
+    },
+    {
+      "id": "cat_tower_3",
+      "type": "jump",
+      "label": "跳上貓爬架三樓",
+      "point": {
+        "x": 120,
+        "y": 310
+      },
+      "radius": 85,
+      "target": {
+        "x": 112,
+        "y": 296
+      },
+      "level": "tower_3",
+      "requires": [
+        "tower_2"
+      ]
+    },
+    {
+      "id": "chair",
+      "type": "jump",
+      "label": "跳上椅子",
+      "point": {
+        "x": 668,
+        "y": 509
+      },
+      "radius": 88,
+      "target": {
+        "x": 666,
+        "y": 416
+      },
+      "level": "chair",
+      "requires": [
+        "floor"
+      ]
+    },
+    {
+      "id": "desk",
+      "type": "jump",
+      "label": "從椅子跳上桌子",
+      "point": {
+        "x": 624,
+        "y": 330
+      },
+      "radius": 110,
+      "target": {
+        "x": 624,
+        "y": 312
+      },
+      "level": "desk",
+      "requires": [
+        "chair"
+      ]
+    },
+    {
+      "id": "bed",
+      "type": "jump",
+      "label": "直接跳上床",
+      "point": {
+        "x": 1002,
+        "y": 680
+      },
+      "radius": 132,
+      "target": {
+        "x": 1044,
+        "y": 496
+      },
+      "level": "bed",
+      "requires": [
+        "floor"
+      ]
+    },
+    {
+      "id": "water",
+      "type": "interact",
+      "label": "推倒水杯（後續任務）",
+      "point": {
+        "x": 1466,
+        "y": 450
+      },
+      "radius": 75,
+      "requires": [
+        "bed"
+      ]
+    }
+  ],
+  "blockedFloorPolygons": [
+    [
+      [
+        50,
+        130
+      ],
+      [
+        394,
+        125
+      ],
+      [
+        397,
+        551
+      ],
+      [
+        56,
+        590
+      ]
+    ],
+    [
+      [
+        390,
+        332
+      ],
+      [
+        895,
+        308
+      ],
+      [
+        906,
+        481
+      ],
+      [
+        760,
+        493
+      ],
+      [
+        755,
+        414
+      ],
+      [
+        589,
+        548
+      ],
+      [
+        392,
+        513
+      ]
+    ],
+    [
+      [
+        70,
+        570
+      ],
+      [
+        358,
+        557
+      ],
+      [
+        370,
+        754
+      ],
+      [
+        60,
+        754
+      ]
+    ],
+    [
+      [
+        786,
+        446
+      ],
+      [
+        1396,
+        382
+      ],
+      [
+        1450,
+        650
+      ],
+      [
+        1120,
+        724
+      ],
+      [
+        797,
+        605
+      ]
+    ],
+    [
+      [
+        1398,
+        485
+      ],
+      [
+        1617,
+        486
+      ],
+      [
+        1616,
+        686
+      ],
+      [
+        1396,
+        686
+      ]
+    ]
+  ],
+  "platforms": {
+    "floor": {
+      "exits": [
+        "bed",
+        "chair",
+        "tower_1",
+        "tower_2",
+        "pet_bed"
+      ]
+    },
+    "pet_bed": {
+      "exits": [
+        "floor"
+      ]
+    },
+    "tower_1": {
+      "exits": [
+        "floor",
+        "tower_2"
+      ]
+    },
+    "tower_2": {
+      "exits": [
+        "tower_1",
+        "tower_3",
+        "floor"
+      ]
+    },
+    "tower_3": {
+      "exits": [
+        "tower_2"
+      ]
+    },
+    "chair": {
+      "exits": [
+        "floor",
+        "desk"
+      ]
+    },
+    "desk": {
+      "exits": [
+        "chair"
+      ]
+    },
+    "bed": {
+      "exits": [
+        "floor"
+      ]
+    }
+  },
+  "overlayOrdering": "Draw full background first; show relevant foreground overlays above the player based on the player's foot position. Do not draw every overlay above the player unconditionally."
+}

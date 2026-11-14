@@ -1,0 +1,12 @@
+{
+ "x": 873,
+ "y": 325,
+ "frameWidth": 619,
+ "frameHeight": 282,
+ "columns": 2,
+ "frames": {
+  "sleeping": 8,
+  "restless": 8,
+  "awake": 6
+ }
+}

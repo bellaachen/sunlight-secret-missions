@@ -1,0 +1,327 @@
+{
+ "frameSize": 512,
+ "columns": 4,
+ "sets": {
+  "sleeping": {
+   "frames": [
+    {
+     "frame": 0,
+     "fixed": false
+    },
+    {
+     "frame": 1,
+     "fixed": false
+    },
+    {
+     "frame": 2,
+     "fixed": false
+    },
+    {
+     "frame": 3,
+     "fixed": false
+    },
+    {
+     "frame": 4,
+     "fixed": false
+    },
+    {
+     "frame": 5,
+     "fixed": false
+    },
+    {
+     "frame": 6,
+     "fixed": false
+    },
+    {
+     "frame": 7,
+     "fixed": false
+    }
+   ]
+  },
+  "restless": {
+   "frames": [
+    {
+     "frame": 0,
+     "fixed": false
+    },
+    {
+     "frame": 1,
+     "fixed": false
+    },
+    {
+     "frame": 2,
+     "fixed": false
+    },
+    {
+     "frame": 3,
+     "fixed": false
+    },
+    {
+     "frame": 4,
+     "fixed": false
+    },
+    {
+     "frame": 5,
+     "fixed": false
+    },
+    {
+     "frame": 6,
+     "fixed": false
+    },
+    {
+     "frame": 7,
+     "fixed": false
+    },
+    {
+     "frame": 8,
+     "fixed": false
+    },
+    {
+     "frame": 9,
+     "fixed": false
+    },
+    {
+     "frame": 10,
+     "fixed": false
+    },
+    {
+     "frame": 11,
+     "fixed": false
+    },
+    {
+     "frame": 12,
+     "fixed": false
+    },
+    {
+     "frame": 13,
+     "fixed": false
+    },
+    {
+     "frame": 14,
+     "fixed": false
+    },
+    {
+     "frame": 15,
+     "fixed": false
+    }
+   ]
+  },
+  "peek": {
+   "frames": [
+    {
+     "frame": 0,
+     "fixed": false
+    },
+    {
+     "frame": 1,
+     "fixed": false
+    },
+    {
+     "frame": 2,
+     "fixed": false
+    },
+    {
+     "frame": 3,
+     "fixed": false
+    },
+    {
+     "frame": 4,
+     "fixed": false
+    },
+    {
+     "frame": 5,
+     "fixed": false
+    },
+    {
+     "frame": 6,
+     "fixed": false
+    },
+    {
+     "frame": 7,
+     "fixed": false
+    },
+    {
+     "frame": 8,
+     "fixed": false
+    },
+    {
+     "frame": 9,
+     "fixed": false
+    },
+    {
+     "frame": 10,
+     "fixed": false
+    },
+    {
+     "frame": 11,
+     "fixed": false
+    }
+   ]
+  },
+  "awake": {
+   "frames": [
+    {
+     "frame": 0,
+     "fixed": false
+    },
+    {
+     "frame": 1,
+     "fixed": false
+    },
+    {
+     "frame": 2,
+     "fixed": true,
+     "shift": [
+      -3,
+      -20
+     ],
+     "matchScore": 0.859
+    },
+    {
+     "frame": 3,
+     "fixed": true,
+     "shift": [
+      -3,
+      -20
+     ],
+     "matchScore": 0.857
+    },
+    {
+     "frame": 4,
+     "fixed": true,
+     "shift": [
+      -3,
+      -20
+     ],
+     "matchScore": 0.855
+    },
+    {
+     "frame": 5,
+     "fixed": true,
+     "shift": [
+      -3,
+      -20
+     ],
+     "matchScore": 0.855
+    },
+    {
+     "frame": 6,
+     "fixed": true,
+     "shift": [
+      -3,
+      -20
+     ],
+     "matchScore": 0.855
+    },
+    {
+     "frame": 7,
+     "fixed": true,
+     "shift": [
+      -3,
+      -20
+     ],
+     "matchScore": 0.857
+    },
+    {
+     "frame": 8,
+     "fixed": true,
+     "shift": [
+      -3,
+      -20
+     ],
+     "matchScore": 0.859
+    },
+    {
+     "frame": 9,
+     "fixed": true,
+     "shift": [
+      -3,
+      -20
+     ],
+     "matchScore": 0.86
+    },
+    {
+     "frame": 10,
+     "fixed": true,
+     "shift": [
+      -3,
+      -20
+     ],
+     "matchScore": 0.86
+    },
+    {
+     "frame": 11,
+     "fixed": true,
+     "shift": [
+      -3,
+      -19
+     ],
+     "matchScore": 0.863
+    },
+    {
+     "frame": 12,
+     "fixed": true,
+     "shift": [
+      -3,
+      -19
+     ],
+     "matchScore": 0.869
+    },
+    {
+     "frame": 13,
+     "fixed": true,
+     "shift": [
+      -3,
+      -19
+     ],
+     "matchScore": 0.856
+    },
+    {
+     "frame": 14,
+     "fixed": true,
+     "shift": [
+      -2,
+      -20
+     ],
+     "matchScore": 0.697
+    },
+    {
+     "frame": 15,
+     "fixed": true,
+     "shift": [
+      -3,
+      -20
+     ],
+     "matchScore": 0.815
+    },
+    {
+     "frame": 16,
+     "fixed": true,
+     "shift": [
+      -3,
+      -20
+     ],
+     "matchScore": 0.598
+    },
+    {
+     "frame": 17,
+     "fixed": true,
+     "shift": [
+      -1,
+      -22
+     ],
+     "matchScore": 0.675
+    },
+    {
+     "frame": 18,
+     "fixed": true,
+     "shift": [
+      0,
+      -27
+     ],
+     "matchScore": 0.681
+    }
+   ]
+  }
+ }
+}

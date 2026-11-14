@@ -1,0 +1,752 @@
+{
+ "anchor": [
+  256,
+  300
+ ],
+ "frameSize": 512,
+ "source": "ChatGPT 38-frame concept sheet",
+ "sets": {
+  "sleeping": {
+   "rowScale": 2.299,
+   "frames": [
+    {
+     "frame": 0,
+     "cell": [
+      10,
+      52,
+      196,
+      196
+     ],
+     "matchScore": 0.907,
+     "faceInCell": [
+      106.5,
+      103.5
+     ],
+     "scale": 2.299,
+     "translate": [
+      11.2,
+      62.1
+     ]
+    },
+    {
+     "frame": 1,
+     "cell": [
+      206,
+      52,
+      192,
+      196
+     ],
+     "matchScore": 0.942,
+     "faceInCell": [
+      100.5,
+      103.5
+     ],
+     "scale": 2.299,
+     "translate": [
+      25.0,
+      62.1
+     ]
+    },
+    {
+     "frame": 2,
+     "cell": [
+      398,
+      52,
+      193,
+      196
+     ],
+     "matchScore": 0.885,
+     "faceInCell": [
+      96.0,
+      100.0
+     ],
+     "scale": 2.299,
+     "translate": [
+      35.3,
+      70.1
+     ]
+    },
+    {
+     "frame": 3,
+     "cell": [
+      591,
+      52,
+      189,
+      196
+     ],
+     "matchScore": 0.817,
+     "faceInCell": [
+      89.0,
+      93.5
+     ],
+     "scale": 2.299,
+     "translate": [
+      51.4,
+      85.1
+     ]
+    },
+    {
+     "frame": 4,
+     "cell": [
+      780,
+      52,
+      190,
+      196
+     ],
+     "matchScore": 0.814,
+     "faceInCell": [
+      91.5,
+      92.5
+     ],
+     "scale": 2.299,
+     "translate": [
+      45.7,
+      87.4
+     ]
+    },
+    {
+     "frame": 5,
+     "cell": [
+      970,
+      52,
+      191,
+      196
+     ],
+     "matchScore": 0.865,
+     "faceInCell": [
+      90.0,
+      99.5
+     ],
+     "scale": 2.299,
+     "translate": [
+      49.1,
+      71.3
+     ]
+    },
+    {
+     "frame": 6,
+     "cell": [
+      1161,
+      52,
+      182,
+      196
+     ],
+     "matchScore": 0.925,
+     "faceInCell": [
+      83.5,
+      106.0
+     ],
+     "scale": 2.299,
+     "translate": [
+      64.0,
+      56.3
+     ]
+    },
+    {
+     "frame": 7,
+     "cell": [
+      1343,
+      52,
+      192,
+      196
+     ],
+     "matchScore": 0.916,
+     "faceInCell": [
+      89.0,
+      108.5
+     ],
+     "scale": 2.299,
+     "translate": [
+      51.4,
+      50.6
+     ]
+    }
+   ]
+  },
+  "restless": {
+   "rowScale": 2.857,
+   "frames": [
+    {
+     "frame": 0,
+     "cell": [
+      8,
+      330,
+      137,
+      154
+     ],
+     "matchScore": 0.943,
+     "faceInCell": [
+      66.5,
+      78.5
+     ],
+     "scale": 2.857,
+     "translate": [
+      66.0,
+      75.7
+     ]
+    },
+    {
+     "frame": 1,
+     "cell": [
+      145,
+      330,
+      126,
+      154
+     ],
+     "matchScore": 0.932,
+     "faceInCell": [
+      54.5,
+      81.0
+     ],
+     "scale": 2.857,
+     "translate": [
+      100.3,
+      68.6
+     ]
+    },
+    {
+     "frame": 2,
+     "cell": [
+      271,
+      330,
+      124,
+      154
+     ],
+     "matchScore": 0.895,
+     "faceInCell": [
+      55.0,
+      77.5
+     ],
+     "scale": 2.857,
+     "translate": [
+      98.9,
+      78.6
+     ]
+    },
+    {
+     "frame": 3,
+     "cell": [
+      395,
+      330,
+      126,
+      154
+     ],
+     "matchScore": 0.796,
+     "faceInCell": [
+      50.5,
+      79.0
+     ],
+     "scale": 2.857,
+     "translate": [
+      111.7,
+      74.3
+     ]
+    },
+    {
+     "frame": 4,
+     "cell": [
+      521,
+      330,
+      125,
+      154
+     ],
+     "matchScore": 0.785,
+     "faceInCell": [
+      52.0,
+      80.0
+     ],
+     "scale": 2.857,
+     "translate": [
+      107.4,
+      71.4
+     ]
+    },
+    {
+     "frame": 5,
+     "cell": [
+      646,
+      330,
+      125,
+      154
+     ],
+     "matchScore": 0.809,
+     "faceInCell": [
+      52.5,
+      77.5
+     ],
+     "scale": 2.857,
+     "translate": [
+      106.0,
+      78.6
+     ]
+    },
+    {
+     "frame": 6,
+     "cell": [
+      771,
+      330,
+      126,
+      154
+     ],
+     "matchScore": 0.871,
+     "faceInCell": [
+      51.0,
+      78.0
+     ],
+     "scale": 2.857,
+     "translate": [
+      110.3,
+      77.1
+     ]
+    },
+    {
+     "frame": 7,
+     "cell": [
+      897,
+      330,
+      127,
+      154
+     ],
+     "matchScore": 0.894,
+     "faceInCell": [
+      51.0,
+      78.5
+     ],
+     "scale": 2.857,
+     "translate": [
+      110.3,
+      75.7
+     ]
+    },
+    {
+     "frame": 8,
+     "cell": [
+      1024,
+      330,
+      128,
+      154
+     ],
+     "matchScore": 0.911,
+     "faceInCell": [
+      51.5,
+      80.5
+     ],
+     "scale": 2.857,
+     "translate": [
+      108.9,
+      70.0
+     ]
+    },
+    {
+     "frame": 9,
+     "cell": [
+      1152,
+      330,
+      126,
+      154
+     ],
+     "matchScore": 0.937,
+     "faceInCell": [
+      53.5,
+      81.0
+     ],
+     "scale": 2.857,
+     "translate": [
+      103.1,
+      68.6
+     ]
+    },
+    {
+     "frame": 10,
+     "cell": [
+      1278,
+      330,
+      127,
+      154
+     ],
+     "matchScore": 0.943,
+     "faceInCell": [
+      54.5,
+      82.5
+     ],
+     "scale": 2.857,
+     "translate": [
+      100.3,
+      64.3
+     ]
+    },
+    {
+     "frame": 11,
+     "cell": [
+      1405,
+      330,
+      130,
+      154
+     ],
+     "matchScore": 0.941,
+     "faceInCell": [
+      51.5,
+      84.5
+     ],
+     "scale": 2.857,
+     "translate": [
+      108.9,
+      58.6
+     ]
+    }
+   ]
+  },
+  "peek": {
+   "rowScale": 2.326,
+   "frames": [
+    {
+     "frame": 0,
+     "cell": [
+      10,
+      550,
+      196,
+      187
+     ],
+     "matchScore": 0.939,
+     "faceInCell": [
+      94.5,
+      101.0
+     ],
+     "scale": 2.326,
+     "translate": [
+      36.2,
+      65.1
+     ]
+    },
+    {
+     "frame": 1,
+     "cell": [
+      206,
+      550,
+      193,
+      187
+     ],
+     "matchScore": 0.934,
+     "faceInCell": [
+      92.5,
+      101.5
+     ],
+     "scale": 2.326,
+     "translate": [
+      40.9,
+      64.0
+     ]
+    },
+    {
+     "frame": 2,
+     "cell": [
+      399,
+      550,
+      193,
+      187
+     ],
+     "matchScore": 0.908,
+     "faceInCell": [
+      88.5,
+      100.5
+     ],
+     "scale": 2.326,
+     "translate": [
+      50.2,
+      66.3
+     ]
+    },
+    {
+     "frame": 3,
+     "cell": [
+      592,
+      550,
+      192,
+      187
+     ],
+     "matchScore": 0.868,
+     "faceInCell": [
+      88.5,
+      99.0
+     ],
+     "scale": 2.326,
+     "translate": [
+      50.2,
+      69.8
+     ]
+    },
+    {
+     "frame": 4,
+     "cell": [
+      784,
+      550,
+      190,
+      187
+     ],
+     "matchScore": 0.84,
+     "faceInCell": [
+      85.5,
+      96.0
+     ],
+     "scale": 2.326,
+     "translate": [
+      57.2,
+      76.7
+     ]
+    },
+    {
+     "frame": 5,
+     "cell": [
+      974,
+      550,
+      186,
+      187
+     ],
+     "matchScore": 0.895,
+     "faceInCell": [
+      81.5,
+      100.0
+     ],
+     "scale": 2.326,
+     "translate": [
+      66.5,
+      67.4
+     ]
+    },
+    {
+     "frame": 6,
+     "cell": [
+      1160,
+      550,
+      186,
+      187
+     ],
+     "matchScore": 0.925,
+     "faceInCell": [
+      85.5,
+      105.0
+     ],
+     "scale": 2.326,
+     "translate": [
+      57.2,
+      55.8
+     ]
+    },
+    {
+     "frame": 7,
+     "cell": [
+      1346,
+      550,
+      189,
+      187
+     ],
+     "matchScore": 0.923,
+     "faceInCell": [
+      86.0,
+      106.5
+     ],
+     "scale": 2.326,
+     "translate": [
+      56.0,
+      52.3
+     ]
+    }
+   ]
+  },
+  "awake": {
+   "rowScale": 2.74,
+   "frames": [
+    {
+     "frame": 0,
+     "cell": [
+      8,
+      768,
+      154,
+      232
+     ],
+     "matchScore": 0.945,
+     "faceInCell": [
+      72.5,
+      144.0
+     ],
+     "scale": 2.74,
+     "translate": [
+      57.4,
+      -94.5
+     ]
+    },
+    {
+     "frame": 1,
+     "cell": [
+      162,
+      768,
+      150,
+      232
+     ],
+     "matchScore": 0.924,
+     "faceInCell": [
+      67.0,
+      143.5
+     ],
+     "scale": 2.74,
+     "translate": [
+      72.4,
+      -93.2
+     ]
+    },
+    {
+     "frame": 2,
+     "cell": [
+      312,
+      768,
+      142,
+      232
+     ],
+     "matchScore": 0.843,
+     "faceInCell": [
+      59.5,
+      146.0
+     ],
+     "scale": 2.74,
+     "translate": [
+      93.0,
+      -100.0
+     ]
+    },
+    {
+     "frame": 3,
+     "cell": [
+      454,
+      768,
+      148,
+      232
+     ],
+     "matchScore": 0.78,
+     "faceInCell": [
+      59.5,
+      146.5
+     ],
+     "scale": 2.74,
+     "translate": [
+      93.0,
+      -101.4
+     ]
+    },
+    {
+     "frame": 4,
+     "cell": [
+      602,
+      768,
+      154,
+      232
+     ],
+     "matchScore": 0.747,
+     "faceInCell": [
+      61.5,
+      143.0
+     ],
+     "scale": 2.74,
+     "translate": [
+      87.5,
+      -91.8
+     ]
+    },
+    {
+     "frame": 5,
+     "cell": [
+      756,
+      768,
+      142,
+      232
+     ],
+     "matchScore": 0.705,
+     "faceInCell": [
+      55.0,
+      141.5
+     ],
+     "scale": 2.74,
+     "translate": [
+      105.3,
+      -87.7
+     ]
+    },
+    {
+     "frame": 6,
+     "cell": [
+      898,
+      768,
+      148,
+      232
+     ],
+     "matchScore": 0.702,
+     "faceInCell": [
+      74.0,
+      128.0
+     ],
+     "scale": 2.74,
+     "translate": [
+      105.3,
+      -69.2
+     ]
+    },
+    {
+     "frame": 7,
+     "cell": [
+      1046,
+      768,
+      154,
+      232
+     ],
+     "matchScore": 0.717,
+     "faceInCell": [
+      38.0,
+      151.5
+     ],
+     "scale": 2.74,
+     "translate": [
+      105.3,
+      -101.4
+     ]
+    },
+    {
+     "frame": 8,
+     "cell": [
+      1200,
+      768,
+      159,
+      232
+     ],
+     "matchScore": 0.728,
+     "faceInCell": [
+      42.0,
+      132.5
+     ],
+     "scale": 2.74,
+     "translate": [
+      105.3,
+      -75.3
+     ]
+    },
+    {
+     "frame": 9,
+     "cell": [
+      1359,
+      768,
+      170,
+      232
+     ],
+     "matchScore": 0.692,
+     "faceInCell": [
+      88.0,
+      83.0
+     ],
+     "scale": 2.74,
+     "translate": [
+      105.3,
+      -7.5
+     ]
+    }
+   ]
+  }
+ }
+}

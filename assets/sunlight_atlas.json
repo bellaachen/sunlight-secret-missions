@@ -1,0 +1,353 @@
+{
+ "frames": {
+  "idle_0": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 112,
+    "h": 96
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 112,
+    "h": 96
+   },
+   "sourceSize": {
+    "w": 112,
+    "h": 96
+   }
+  },
+  "idle_1": {
+   "frame": {
+    "x": 112,
+    "y": 0,
+    "w": 112,
+    "h": 96
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 112,
+    "h": 96
+   },
+   "sourceSize": {
+    "w": 112,
+    "h": 96
+   }
+  },
+  "idle_2": {
+   "frame": {
+    "x": 224,
+    "y": 0,
+    "w": 112,
+    "h": 96
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 112,
+    "h": 96
+   },
+   "sourceSize": {
+    "w": 112,
+    "h": 96
+   }
+  },
+  "idle_3": {
+   "frame": {
+    "x": 336,
+    "y": 0,
+    "w": 112,
+    "h": 96
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 112,
+    "h": 96
+   },
+   "sourceSize": {
+    "w": 112,
+    "h": 96
+   }
+  },
+  "walk_down_0": {
+   "frame": {
+    "x": 448,
+    "y": 0,
+    "w": 112,
+    "h": 96
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 112,
+    "h": 96
+   },
+   "sourceSize": {
+    "w": 112,
+    "h": 96
+   }
+  },
+  "walk_down_1": {
+   "frame": {
+    "x": 560,
+    "y": 0,
+    "w": 112,
+    "h": 96
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 112,
+    "h": 96
+   },
+   "sourceSize": {
+    "w": 112,
+    "h": 96
+   }
+  },
+  "walk_down_2": {
+   "frame": {
+    "x": 672,
+    "y": 0,
+    "w": 112,
+    "h": 96
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 112,
+    "h": 96
+   },
+   "sourceSize": {
+    "w": 112,
+    "h": 96
+   }
+  },
+  "walk_down_3": {
+   "frame": {
+    "x": 784,
+    "y": 0,
+    "w": 112,
+    "h": 96
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 112,
+    "h": 96
+   },
+   "sourceSize": {
+    "w": 112,
+    "h": 96
+   }
+  },
+  "walk_up_0": {
+   "frame": {
+    "x": 0,
+    "y": 96,
+    "w": 112,
+    "h": 96
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 112,
+    "h": 96
+   },
+   "sourceSize": {
+    "w": 112,
+    "h": 96
+   }
+  },
+  "walk_up_1": {
+   "frame": {
+    "x": 112,
+    "y": 96,
+    "w": 112,
+    "h": 96
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 112,
+    "h": 96
+   },
+   "sourceSize": {
+    "w": 112,
+    "h": 96
+   }
+  },
+  "walk_up_2": {
+   "frame": {
+    "x": 224,
+    "y": 96,
+    "w": 112,
+    "h": 96
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 112,
+    "h": 96
+   },
+   "sourceSize": {
+    "w": 112,
+    "h": 96
+   }
+  },
+  "walk_left_0": {
+   "frame": {
+    "x": 336,
+    "y": 96,
+    "w": 112,
+    "h": 96
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 112,
+    "h": 96
+   },
+   "sourceSize": {
+    "w": 112,
+    "h": 96
+   }
+  },
+  "walk_left_1": {
+   "frame": {
+    "x": 448,
+    "y": 96,
+    "w": 112,
+    "h": 96
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 112,
+    "h": 96
+   },
+   "sourceSize": {
+    "w": 112,
+    "h": 96
+   }
+  },
+  "walk_left_2": {
+   "frame": {
+    "x": 560,
+    "y": 96,
+    "w": 112,
+    "h": 96
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 112,
+    "h": 96
+   },
+   "sourceSize": {
+    "w": 112,
+    "h": 96
+   }
+  },
+  "walk_right_0": {
+   "frame": {
+    "x": 672,
+    "y": 96,
+    "w": 112,
+    "h": 96
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 112,
+    "h": 96
+   },
+   "sourceSize": {
+    "w": 112,
+    "h": 96
+   }
+  },
+  "walk_right_1": {
+   "frame": {
+    "x": 784,
+    "y": 96,
+    "w": 112,
+    "h": 96
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 112,
+    "h": 96
+   },
+   "sourceSize": {
+    "w": 112,
+    "h": 96
+   }
+  },
+  "walk_right_2": {
+   "frame": {
+    "x": 0,
+    "y": 192,
+    "w": 112,
+    "h": 96
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 112,
+    "h": 96
+   },
+   "sourceSize": {
+    "w": 112,
+    "h": 96
+   }
+  }
+ },
+ "meta": {
+  "image": "sunlight_atlas.png",
+  "size": {
+   "w": 896,
+   "h": 288
+  },
+  "scale": "1",
+  "note": "Re-sliced from Sun Light Phaser Sprite Pack. Feet at bottom edge -> origin (0.5,1)."
+ }
+}
