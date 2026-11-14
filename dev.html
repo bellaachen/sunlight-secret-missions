@@ -45,9 +45,26 @@
   kbd { font-family: inherit; background: var(--chip); border: 1px solid var(--line); border-radius: 6px; padding: 0 6px; font-size: 12px; }
   ul { margin: 0; padding-left: 18px; color: var(--muted); }
   footer { text-align: center; color: var(--muted); font-size: 12px; padding: 22px 0 8px; }
+  /* 手機（觸控）：橫拿時只留遊戲畫面；直拿時提示轉橫 */
+  .rotate { display: none; }
+  .fs-btn { display: none; }
+  @media (pointer: coarse) and (orientation: landscape) {
+    main { padding: 0; max-width: none; }
+    h1, p.sub, .bar, .grid, footer { display: none; }
+    #game { width: auto; height: 100vh; height: 100dvh; max-width: 100vw; margin: 0 auto; border-radius: 0; border: 0; }
+    .fs-btn { display: block; position: fixed; right: 10px; top: 10px; z-index: 10; font: inherit; font-size: 13px;
+      padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--ink); opacity: .85; }
+  }
+  @media (pointer: coarse) and (orientation: portrait) {
+    .rotate { display: flex; position: fixed; inset: 0; z-index: 20; background: var(--bg); color: var(--ink);
+      align-items: center; justify-content: center; flex-direction: column; gap: 10px; text-align: center; padding: 24px; }
+    .rotate .icon { font-size: 54px; }
+  }
 </style>
 </head>
 <body>
+<div class="rotate"><div class="icon">📱↻</div><div style="font-size:18px;font-weight:700">請把手機轉橫</div><div style="color:var(--muted);font-size:14px">阿光的房間是橫的，轉橫才玩得到全部</div></div>
+<button class="fs-btn" id="fs">全螢幕</button>
 <main>
   <h1>阿光的秘密任務 · 臥室互動</h1>
   <p class="sub">開發版：點一下畫面後操作。數字鍵 1／2／3 切換場景，B 開關 Debug，M 編輯碰撞。公開給玩家的版本是 <a href="index.html">index.html</a>。</p>
@@ -97,6 +114,7 @@
   <footer>Bella Chen 2026/11/10</footer>
 </main>
 
+<script>window.SUNLIGHT_TOUCH = 'auto';   // 測試站：手機自動切到「點哪走哪」；電腦加 ?touch=1 用滑鼠測</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.80.1/phaser.min.js"></script>
 <!--INLINE_ASSETS-->
 <script src="assets/sunlight_inline.js"></script>
@@ -114,6 +132,7 @@
 <script src="src/MissionManager.js"></script>
 <script src="src/MissionHUD.js"></script>
 <script src="src/LayoutEditor.js"></script>
+<script src="src/TapNav.js"></script>
 <script src="src/BedroomScene.js"></script>
 <script src="src/OwnerTest.js"></script>
 <script>
@@ -151,6 +170,11 @@
       if (e.key === '3') go('OwnerTest');
     });
     window.__game = game;
+    const fs = document.getElementById('fs');
+    if (fs) {
+      if (!document.fullscreenEnabled && !document.webkitFullscreenEnabled) fs.remove();
+      else fs.addEventListener('click', () => { if (game.scale.isFullscreen) game.scale.stopFullscreen(); else game.scale.startFullscreen(); });
+    }
   })();
 </script>
 </body>

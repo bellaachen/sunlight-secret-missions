@@ -104,6 +104,9 @@ class BedroomScene extends Phaser.Scene {
     const ovMeta = IN ? IN.overlays : this.cache.json.get('bedroomOv');
     // 公開版（play.html 設定 window.SUNLIGHT_MODE = 'play'）：不套用編輯草稿、沒有 Debug／編輯模式
     this.play = window.SUNLIGHT_MODE === 'play';
+    // 觸控模式（手機「點哪走哪」）：window.SUNLIGHT_TOUCH = true 強制開、'auto' 手機自動開；網址加 ?touch=1 可以在電腦上用滑鼠測
+    const T = window.SUNLIGHT_TOUCH, q = new URLSearchParams(location.search).get('touch');
+    this.touch = typeof TapNav !== 'undefined' && (q === '1' || T === true || (T === 'auto' && q !== '0' && window.matchMedia && matchMedia('(pointer: coarse)').matches));
     this.draftApplied = !this.play && typeof LayoutEditor !== 'undefined' && LayoutEditor.applyDraft(cfg);   // 編輯模式存下來、還沒匯出的草稿
 
     this.level = 'floor';
@@ -196,7 +199,8 @@ class BedroomScene extends Phaser.Scene {
 
     this.setupMission();
     this.refreshStatus();
-    if (!this.play && typeof LayoutEditor !== 'undefined') this.editor = new LayoutEditor(this);
+    if (!this.play && !this.touch && typeof LayoutEditor !== 'undefined') this.editor = new LayoutEditor(this);
+    if (this.touch) this.tapNav = new TapNav(this);
     if (this.draftApplied) this.showToast('已套用編輯草稿（按 M 進入編輯模式可匯出或清除）');
   }
 
@@ -211,6 +215,7 @@ class BedroomScene extends Phaser.Scene {
       if (cfg.ownerMission.face) Object.assign(this.alertParams.face, cfg.ownerMission.face);
       if (cfg.ownerMission.nearOwnerRadius) this.alertParams.nearOwnerRadius = cfg.ownerMission.nearOwnerRadius;
     }
+    if (this.tapNav) this.tapNav.invalidate();
     if (this.missionMgr) this.missionMgr.def = cfg.missions[0];
   }
 
@@ -367,7 +372,7 @@ class BedroomScene extends Phaser.Scene {
     const onBed = this.level === 'bed' && !this.busy;
     this.missionMgr.update(dt, { level: this.level, x: s.x, y: s.y, moving: cat.moving, busy: this.busy, alert: this.alertSys });
     this.alertSys.update(dt, {
-      onBed, moving: cat.moving, sneak: this.keys.SHIFT.isDown,
+      onBed, moving: cat.moving, sneak: this.isSneaking(),
       distFace: Phaser.Math.Distance.Between(s.x, s.y, P.face.x, P.face.y),
       sleeping: this.missionMgr.napping, busy: this.busy,
     });
@@ -617,6 +622,8 @@ class BedroomScene extends Phaser.Scene {
     this.tweens.add({ targets: this.toast, alpha: 0, delay: 1800, duration: 500 });
   }
 
+  isSneaking() { return this.keys.SHIFT.isDown || !!(this.tapNav && this.tapNav.sneak); }
+
   /* ---------- 每幀 ---------- */
   update(_, dt) {
     const cat = this.cat, s = cat.sprite, k = this.keys;
@@ -637,8 +644,9 @@ class BedroomScene extends Phaser.Scene {
       if (Phaser.Input.Keyboard.JustDown(k.A) || Phaser.Input.Keyboard.JustDown(k.LEFT)) cat.facingLeft = true;
       if (Phaser.Input.Keyboard.JustDown(k.D) || Phaser.Input.Keyboard.JustDown(k.RIGHT)) cat.facingLeft = false;
     }
-    // Shift 潛行：走得比較慢，在床上讓警覺值上升得比較少
-    const sneak = k.SHIFT.isDown;
+    // Shift 潛行（手機：右下的潛行鈕）：走得比較慢，在床上讓警覺值上升得比較少
+    const sneak = this.isSneaking();
+    if (this.tapNav) this.tapNav.update(dt);
     cat.speedMul = sneak ? 0.45 : 1;
     cat.update(dt);
     if (!this.busy) s.anims.timeScale = sneak && cat.moving ? 0.6 : 1;
@@ -647,7 +655,7 @@ class BedroomScene extends Phaser.Scene {
     if (this.ended) {
       if (this.endReady && Phaser.Input.Keyboard.JustDown(k.SPACE)) { this.scene.restart(); return; }
       this.bubble.setVisible(false); this.ring.setVisible(false);
-      this.bar.setText(this.missionMgr.state === 'success' ? '任務完成' : '主人醒來了…'); const bw0 = this.bar.width + 56;
+      this.bar.setText(this.touch && this.endReady ? '點一下畫面重新開始' : this.missionMgr.state === 'success' ? '任務完成' : '主人醒來了…'); const bw0 = this.bar.width + 56;
       this.barBg.clear().fillStyle(0x3b2620, 0.72).fillRoundedRect(ROOM_W / 2 - bw0 / 2, ROOM_H - 72, bw0, 52, 26);
       this.drawDebug([]);
       return;
@@ -670,12 +678,14 @@ class BedroomScene extends Phaser.Scene {
     const primary = jump ? { key: 'Space', label: jump.label, target: jump.target, kind: jump.kind }
       : item ? { key: 'E', label: item.label, kind: 'interact' } : null;
     const locked = !primary && this.lockedHint();
+    this.primaryAct = jump || item || null;
     if (primary && !this.busy) {
-      this.bubbleText.setText(`${primary.key}  ${primary.label}`);
+      this.bubbleText.setText(this.touch ? `👆 ${primary.label}` : `${primary.key}  ${primary.label}`);
       const w = this.bubbleText.width + 36, h = 44, by = s.y - s.displayHeight - 30;
       this.bubbleBg.clear().fillStyle(0xfffaf3, 0.95).fillRoundedRect(-w / 2, -h / 2, w, h, 22)
         .fillTriangle(-9, h / 2 - 1, 9, h / 2 - 1, 0, h / 2 + 10);
       this.bubble.setPosition(Phaser.Math.Clamp(s.x, w / 2 + 10, ROOM_W - w / 2 - 10), Math.max(30, by)).setVisible(true);
+      this.bubbleRect = new Phaser.Geom.Rectangle(this.bubble.x - w / 2 - 10, this.bubble.y - h / 2 - 10, w + 20, h + 20);
       if (primary.target && primary.kind !== 'interact') this.ring.setPosition(primary.target.x, primary.target.y).setVisible(true);
       else this.ring.setVisible(false);
     } else { this.bubble.setVisible(false); this.ring.setVisible(false); }
@@ -683,9 +693,12 @@ class BedroomScene extends Phaser.Scene {
     // 提示列：列出每個去處要按什麼（平台上才會有多個）
     const parts = opts.up.concat(opts.down).map(o => `${this.hintFor(opts, o)}  ${o.label}`);
     if (item) parts.push(`E  ${item.label}`);
-    let barStr = parts.length ? parts.join('　　')
+    let barStr = this.touch
+      ? (locked ? '🔒 ' + locked : '點地板＝走過去　·　點家具＝跳上去　·　點阿光＝停下　·　點泡泡＝馬上跳')
+      : parts.length ? parts.join('　　')
       : (locked ? '🔒 ' + locked : (this.play ? 'WASD／方向鍵 移動　·　Shift 潛行　·　Space 跳躍　·　E 互動　·　Tab 任務' : 'WASD／方向鍵 移動　·　Shift 潛行　·　Space 跳躍　·　E 互動　·　Tab 任務　·　B Debug　·　M 編輯'));
-    if (this.level === 'bed' && parts.length) barStr += '　　（Shift 潛行比較不會吵醒主人）';
+    if (this.level === 'bed' && parts.length && !this.touch) barStr += '　　（Shift 潛行比較不會吵醒主人）';
+    if (this.level === 'bed' && this.touch && !this.tapNav.sneak) barStr = '在床上記得開右下的「潛行」，比較不會吵醒主人';
     if (this.busy) barStr = '…';
     this.bar.setText(barStr);
     const bw = this.bar.width + 56;

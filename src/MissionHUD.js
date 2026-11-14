@@ -61,7 +61,7 @@ class MissionHUD {
     let step = m.state === 'success' ? '任務完成' : m.state === 'failed' ? '任務失敗' : cur ? cur.text : '';
     if (cur && cur.id === 'nap' && m.napT > 0) step += `　${(m.napT / 1000).toFixed(1)}/${m.def.napSeconds} 秒`;
     this.pillText.setText(`📍 ${location}　·　🐾 ${stepNo}/${m.steps.length} ${step}`);
-    const pw = this.pillText.width + 44, pill = new Phaser.Geom.Rectangle(x, 22, pw, 48);
+    const pw = this.pillText.width + 44, pill = this.pillRect = new Phaser.Geom.Rectangle(x, 22, pw, 48);
     this.pillG.clear().fillStyle(0xfffaf3, 0.94).fillRoundedRect(pill.x, pill.y, pill.width, pill.height, 24);
 
     // 展開／收合
@@ -225,7 +225,7 @@ class MissionHUD {
     const w = 560, h = 120, x = this.W / 2 - w / 2, y = Math.min(belowY + 24, this.H - h - 20);
     this.s.add.graphics().setDepth(9620).fillStyle(0xfffaf3, 0.97).fillRoundedRect(x, y, w, h, 24);
     this.text(this.W / 2, y + 36, '主人醒來了！任務失敗', 32, '#4a3328', true, 9621).setOrigin(0.5);
-    this.text(this.W / 2, y + 86, '按 Space 重新開始', 22, '#8a6a58', false, 9621).setOrigin(0.5);
+    this.text(this.W / 2, y + 86, (this.s.touch ? '點一下畫面重新開始' : '按 Space 重新開始'), 22, '#8a6a58', false, 9621).setOrigin(0.5);
   }
 
   showSuccess(r) {
@@ -251,7 +251,7 @@ class MissionHUD {
       objs.push(this.text(this.W / 2, yy, `獲得稱號：「${r.title}」`, 22, '#a07a3a', true, 9621).setOrigin(0.5, 0));
       yy += 54;
     }
-    objs.push(this.text(this.W / 2, y + h - 40, `用時 ${r.seconds} 秒　·　按 Space 再玩一次`, 20, '#8a7a6e', false, 9621).setOrigin(0.5));
+    objs.push(this.text(this.W / 2, y + h - 40, `用時 ${r.seconds} 秒　·　${this.s.touch ? '點一下畫面再玩一次' : '按 Space 再玩一次'}`, 20, '#8a7a6e', false, 9621).setOrigin(0.5));
     objs.forEach(o => { o.setAlpha(0); this.s.tweens.add({ targets: o, alpha: 1, duration: 320, delay: 120 }); });
   }
 }

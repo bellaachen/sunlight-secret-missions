@@ -10,6 +10,12 @@
 
 打包成單一 HTML 檔：`python3 tools/build_single_file.py index.html dist/index.html`（公開版）、`python3 tools/build_single_file.py dev.html dist/dev.html`（開發版）。
 
+## 手機版（測試中，只在 dev.html）
+- `src/TapNav.js`：「點哪走哪」——點地板走過去（A* 繞過家具）、點家具自動走到觸發圈再跳（會自動先上椅子再上書桌這類規則）、點床／書桌上的位置跳上去再走過去、點水杯自動上床推倒、走路時點阿光停下、點泡泡馬上跳、點任務膠囊展開任務卡、右下「潛行」鈕切換潛行
+- 啟用條件：`window.SUNLIGHT_TOUCH = 'auto'`（dev.html 已設定）且是觸控裝置；電腦上用 `dev.html?touch=1` 用滑鼠測，`?touch=0` 強制關
+- 手機直拿會提示轉橫；橫拿時只顯示遊戲畫面，Android 有「全螢幕」按鈕（iPhone Safari 不支援網頁全螢幕）
+- 公開版 `index.html` 還沒加，測試沒問題後再開
+
 ## 場景（dev.html）
 - **② 夜晚臥室互動**（預設）：`src/BedroomScene.js`，使用 Sun_Light_Bedroom_Scene_Pack_v1 的核准美術；含床鋪近景任務（主人警覺值）
 - **③ 主人動畫測試**：`src/OwnerTest.js`，原始／對齊後並排比較、三種狀態切換、背景切換、去背問題逐幀標示、警覺值滑桿

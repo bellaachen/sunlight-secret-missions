@@ -67,6 +67,7 @@ class SunLightCat {
     this.dir = 'down';
     this.facingLeft = false;
     this.moving = false;
+    this.virtualDir = null;   // 觸控模式：TapNav 每幀給的移動方向（單位向量），null = 用鍵盤
 
     const kb = scene.input.keyboard;
     this.cursors = kb.createCursorKeys();
@@ -104,6 +105,7 @@ class SunLightCat {
     const c = this.cursors, k = this.wasd;
     let ix = (c.right.isDown || k.D.isDown ? 1 : 0) - (c.left.isDown || k.A.isDown ? 1 : 0);
     let iy = (c.down.isDown || k.S.isDown ? 1 : 0) - (c.up.isDown || k.W.isDown ? 1 : 0);
+    if (this.virtualDir) { ix = this.virtualDir.x; iy = this.virtualDir.y; }   // 手機「點哪走哪」給的方向（TapNav）
     const len = Math.hypot(ix, iy) || 1;
     const vx = (ix / len) * this.opt.speed * this.speedMul;
     const vy = (iy / len) * this.opt.speed * this.opt.depthFactor * this.speedMul;
