@@ -8,6 +8,7 @@
  *   點阿光          → 立刻停下來（主人偷看時用）
  *   右下「潛行」鈕  → 切換潛行（走慢、比較安靜）
  *   點任務膠囊      → 展開任務卡
+ *   直式：左右拖曳  → 捲動房間看其他地方（點下一步時鏡頭會跟回阿光）
  *
  * 找路：每個平台各自一張 8px 格子地圖（用阿光真正的碰撞判定），A* 找路後把路線拉直。
  * 換平台：用 platforms／zones 的規則做 BFS，找出最少跳幾次。
@@ -23,13 +24,20 @@ class TapNav {
     this.cache = new Map();
     this.stuckT = 0;
     this.buildUI();
-    scene.input.on('pointerdown', p => this.onTap(p));
+    // 按下 → 放開才算「點」；直式時拖曳＝左右捲動房間（看看其他地方），放開後阿光一動就會跟回來
+    scene.input.on('pointerdown', p => { this.down = { x: p.x, y: p.y, sx: scene.cameras.main.scrollX, drag: false }; });
+    scene.input.on('pointermove', p => {
+      const d = this.down; if (!d || !p.isDown || !scene.portrait) return;
+      if (!d.drag && Math.abs(p.x - d.x) > 14) { d.drag = true; scene.cameras.main.stopFollow(); }
+      if (d.drag) { const cam = scene.cameras.main; cam.scrollX = d.sx - (p.x - d.x) / cam.zoom; }
+    });
+    scene.input.on('pointerup', p => { const d = this.down; this.down = null; if (d && !d.drag) this.onTap(p); });
   }
 
   /* ---------------- 畫面：潛行按鈕、目的地標記 ---------------- */
   buildUI() {
-    const s = this.s, W = ROOM_W, H = ROOM_H;
-    this.btn = { x: W - 196, y: H - 132, w: 172, h: 92 };
+    const s = this.s, W = s.VW, H = s.VH;
+    this.btn = s.portrait ? { x: W / 2 - 120, y: H - 92, w: 240, h: 76 } : { x: W - 196, y: H - 132, w: 172, h: 92 };
     this.btnG = s.add.graphics().setDepth(9100);
     this.btnText = s.add.text(this.btn.x + this.btn.w / 2, this.btn.y + this.btn.h / 2, '', {
       fontFamily: UI_FONT, fontSize: '30px', color: '#4a3328', fontStyle: '700', align: 'center',
@@ -46,11 +54,13 @@ class TapNav {
 
   /* ---------------- 點擊 ---------------- */
   onTap(p) {
-    const s = this.s, x = p.worldX, y = p.worldY, cat = s.cat.sprite;
+    const s = this.s, cat = s.cat.sprite, u = s.uiPoint(p), { x, y } = s.worldPoint(p);
     if (s.ended) { if (s.endReady) s.scene.restart(); return; }
-    if (this.inBtn(x, y)) { this.sneak = !this.sneak; this.drawButton(); return; }
+    if (this.inBtn(u.x, u.y)) { this.sneak = !this.sneak; this.drawButton(); return; }
     const hud = s.hud;
-    if (hud.pillRect && Phaser.Geom.Rectangle.Contains(hud.pillRect, x, y)) { hud.expandUntil = hud.t + 4000; return; }
+    if (hud.pillRect && Phaser.Geom.Rectangle.Contains(hud.pillRect, u.x, u.y)) { hud.expandUntil = hud.t + 4000; return; }
+    // 直式：點在上下兩條介面區（房間外面）→ 不動
+    if (s.portrait) { const v = s.cameras.main; if (p.y < v.y || p.y > v.y + v.height) return; }
     if (s.bubble.visible && s.bubbleRect && Phaser.Geom.Rectangle.Contains(s.bubbleRect, x, y) && s.primaryAct) {
       this.stop(); s.perform(s.primaryAct); return;
     }
@@ -60,6 +70,7 @@ class TapNav {
     if ((this.goal || s.cat.moving) && Phaser.Geom.Rectangle.Contains(b, x, y)) { this.stop(); s.showToast('停下來了'); return; }
     this.goal = this.interpret(x, y);
     this.path = null; this.stuckT = 0;
+    if (s.portrait) s.cameras.main.startFollow(cat, true, 0.12, 0.12);   // 拖去看別的地方之後，點了就跟回阿光
     if (this.goal) this.showMark(this.goal.mx ?? x, this.goal.my ?? y);
   }
 

@@ -107,6 +107,10 @@ class BedroomScene extends Phaser.Scene {
     // 觸控模式（手機「點哪走哪」）：window.SUNLIGHT_TOUCH = true 強制開、'auto' 手機自動開；網址加 ?touch=1 可以在電腦上用滑鼠測
     const T = window.SUNLIGHT_TOUCH, q = new URLSearchParams(location.search).get('touch');
     this.touch = typeof TapNav !== 'undefined' && (q === '1' || T === true || (T === 'auto' && q !== '0' && window.matchMedia && matchMedia('(pointer: coarse)').matches));
+    // 直式手機版：畫布是直的（dev.html 依螢幕決定），房間用主鏡頭放大、跟著阿光左右捲動；介面用另一個鏡頭畫在上下兩條
+    this.portrait = this.touch && this.scale.height > this.scale.width;
+    this.UIZ = this.portrait ? 1.5 : 1;                         // 介面放大倍率（直式時字才看得清楚）
+    this.VW = this.scale.width / this.UIZ; this.VH = this.scale.height / this.UIZ;   // 介面座標的寬高
     this.draftApplied = !this.play && typeof LayoutEditor !== 'undefined' && LayoutEditor.applyDraft(cfg);   // 編輯模式存下來、還沒匯出的草稿
 
     this.level = 'floor';
@@ -176,8 +180,9 @@ class BedroomScene extends Phaser.Scene {
     this.statusBg = pill(22, 300);
     this.status = this.add.text(48, 34, '', { fontFamily: UI_FONT, fontSize: '24px', color: '#4a3328', fontStyle: '700' }).setDepth(9001);
     this.barBg = this.add.graphics().setDepth(9000);
-    this.bar = this.add.text(ROOM_W / 2, ROOM_H - 46, '', { fontFamily: UI_FONT, fontSize: '23px', color: '#fff8ee' }).setOrigin(0.5).setDepth(9001);
-    this.toast = this.add.text(ROOM_W / 2, 92, '', {
+    this.barY = this.portrait ? this.VH - 150 : this.VH - 72;
+    this.bar = this.add.text(this.VW / 2, this.barY + 26, '', { fontFamily: UI_FONT, fontSize: '23px', color: '#fff8ee' }).setOrigin(0.5).setDepth(9001);
+    this.toast = this.add.text(this.VW / 2, this.portrait ? 300 : 92, '', {
       fontFamily: UI_FONT, fontSize: '24px', color: '#fff8ee', backgroundColor: '#5a3a2ecc', padding: { x: 18, y: 10 },
     }).setOrigin(0.5).setDepth(9002).setAlpha(0);
 
@@ -201,6 +206,7 @@ class BedroomScene extends Phaser.Scene {
     this.refreshStatus();
     if (!this.play && !this.touch && typeof LayoutEditor !== 'undefined') this.editor = new LayoutEditor(this);
     if (this.touch) this.tapNav = new TapNav(this);
+    if (this.portrait) this.setupPortrait();
     if (this.draftApplied) this.showToast('已套用編輯草稿（按 M 進入編輯模式可匯出或清除）');
   }
 
@@ -233,7 +239,7 @@ class BedroomScene extends Phaser.Scene {
     this.setupCup();
     this.alertSys = new AlertSystem(P, this.owner);
     this.missionMgr = new MissionManager(this.cfg.missions[0]);
-    this.hud = new MissionHUD(this, { mission: this.missionMgr, alert: this.alertSys, params: P, W: ROOM_W, H: ROOM_H });
+    this.hud = new MissionHUD(this, { mission: this.missionMgr, alert: this.alertSys, params: P, W: this.VW, H: this.VH, portrait: this.portrait });
 
     // 走動時的聲響：在阿光頭上冒一個小字，讓玩家知道是自己吵到主人
     this.alertSys.on('bump', (amt, reason) => {
@@ -622,6 +628,26 @@ class BedroomScene extends Phaser.Scene {
     this.tweens.add({ targets: this.toast, alpha: 0, delay: 1800, duration: 500 });
   }
 
+  /* ---------- 直式手機版：兩個鏡頭 ---------- */
+  setupPortrait() {
+    const W = this.scale.width, H = this.scale.height, Z = this.UIZ;
+    const top = 160 * Z, bottom = 176 * Z;                 // 上面放任務膠囊＋警覺值，下面放提示列＋潛行鈕
+    const cam = this.cameras.main;
+    cam.setViewport(0, top, W, H - top - bottom).setBounds(0, 0, ROOM_W, ROOM_H).setZoom((H - top - bottom) / ROOM_H);
+    cam.setBackgroundColor('#2a2238');
+    cam.startFollow(this.cat.sprite, true, 0.12, 0.12);
+    this.uiCam = this.cameras.add(0, 0, W, H).setZoom(Z).setOrigin(0, 0);
+    // 介面鏡頭最後畫、沒有底色 → 上下兩條是畫布底色，任務卡、近景圓可以疊在房間上
+    // 每次畫面前分配：depth ≥ 8400 的是介面（除了跟著房間位置的飄字）
+    this.events.on('prerender', () => {
+      const ui = this.uiCam.id, main = cam.id;
+      for (const o of this.children.list) o.cameraFilter = (o.depth >= 8400 && !o.worldUI) ? main : ui;
+    });
+  }
+  /** 螢幕座標 → 房間座標、介面座標 */
+  worldPoint(p) { const v = this.cameras.main.getWorldPoint(p.x, p.y); return { x: v.x, y: v.y }; }
+  uiPoint(p) { return { x: p.x / this.UIZ, y: p.y / this.UIZ }; }
+
   isSneaking() { return this.keys.SHIFT.isDown || !!(this.tapNav && this.tapNav.sneak); }
 
   /* ---------- 每幀 ---------- */
@@ -634,7 +660,7 @@ class BedroomScene extends Phaser.Scene {
       this.bubble.setVisible(false); this.ring.setVisible(false);
       this.bar.setText('✏️ 編輯模式　·　1–8 切換圖層　·　Ctrl+Z 復原　·　M 離開');
       const bw1 = this.bar.width + 56;
-      this.barBg.clear().fillStyle(0x3b2620, 0.72).fillRoundedRect(ROOM_W / 2 - bw1 / 2, ROOM_H - 72, bw1, 52, 26);
+      this.barBg.clear().fillStyle(0x3b2620, 0.72).fillRoundedRect(this.VW / 2 - bw1 / 2, this.barY, bw1, 52, 26);
       this.drawDebug([]);
       return;
     }
@@ -656,7 +682,7 @@ class BedroomScene extends Phaser.Scene {
       if (this.endReady && Phaser.Input.Keyboard.JustDown(k.SPACE)) { this.scene.restart(); return; }
       this.bubble.setVisible(false); this.ring.setVisible(false);
       this.bar.setText(this.touch && this.endReady ? '點一下畫面重新開始' : this.missionMgr.state === 'success' ? '任務完成' : '主人醒來了…'); const bw0 = this.bar.width + 56;
-      this.barBg.clear().fillStyle(0x3b2620, 0.72).fillRoundedRect(ROOM_W / 2 - bw0 / 2, ROOM_H - 72, bw0, 52, 26);
+      this.barBg.clear().fillStyle(0x3b2620, 0.72).fillRoundedRect(this.VW / 2 - bw0 / 2, this.barY, bw0, 52, 26);
       this.drawDebug([]);
       return;
     }
@@ -694,15 +720,15 @@ class BedroomScene extends Phaser.Scene {
     const parts = opts.up.concat(opts.down).map(o => `${this.hintFor(opts, o)}  ${o.label}`);
     if (item) parts.push(`E  ${item.label}`);
     let barStr = this.touch
-      ? (locked ? '🔒 ' + locked : '點地板＝走過去　·　點家具＝跳上去　·　點阿光＝停下　·　點泡泡＝馬上跳')
+      ? (locked ? '🔒 ' + locked : this.portrait ? '點地板走過去・點家具跳上去・點阿光停下' : '點地板＝走過去　·　點家具＝跳上去　·　點阿光＝停下　·　點泡泡＝馬上跳')
       : parts.length ? parts.join('　　')
       : (locked ? '🔒 ' + locked : (this.play ? 'WASD／方向鍵 移動　·　Shift 潛行　·　Space 跳躍　·　E 互動　·　Tab 任務' : 'WASD／方向鍵 移動　·　Shift 潛行　·　Space 跳躍　·　E 互動　·　Tab 任務　·　B Debug　·　M 編輯'));
     if (this.level === 'bed' && parts.length && !this.touch) barStr += '　　（Shift 潛行比較不會吵醒主人）';
-    if (this.level === 'bed' && this.touch && !this.tapNav.sneak) barStr = '在床上記得開右下的「潛行」，比較不會吵醒主人';
+    if (this.level === 'bed' && this.touch && !this.tapNav.sneak) barStr = this.portrait ? '在床上記得開「潛行」，比較不會吵醒主人' : '在床上記得開右下的「潛行」，比較不會吵醒主人';
     if (this.busy) barStr = '…';
     this.bar.setText(barStr);
     const bw = this.bar.width + 56;
-    this.barBg.clear().fillStyle(0x3b2620, 0.72).fillRoundedRect(ROOM_W / 2 - bw / 2, ROOM_H - 72, bw, 52, 26);
+    this.barBg.clear().fillStyle(0x3b2620, 0.72).fillRoundedRect(this.VW / 2 - bw / 2, this.barY, bw, 52, 26);
 
     // 前後遮擋：腳底在家具前緣「上方」= 在家具後面
     let hidden = false;
@@ -728,7 +754,7 @@ class BedroomScene extends Phaser.Scene {
     // 編輯模式不顯示資訊框（編輯器有自己的座標提示）；平常放在阿光的另一側，不擋住要看的地方
     this.debugText.setVisible(on && !editing);
     if (on && !editing) {
-      const left = this.cat.sprite.x > ROOM_W / 2;
+      const left = this.cat.sprite.x > ROOM_W / 2;   // Debug 資訊框（開發用，橫式）
       this.debugText.setOrigin(left ? 0 : 1, 1).setPosition(left ? 24 : ROOM_W - 24, ROOM_H - 96);
     }
     if (!on) return;

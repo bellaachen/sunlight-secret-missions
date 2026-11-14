@@ -46,7 +46,6 @@
   ul { margin: 0; padding-left: 18px; color: var(--muted); }
   footer { text-align: center; color: var(--muted); font-size: 12px; padding: 22px 0 8px; }
   /* 手機（觸控）：橫拿時只留遊戲畫面；直拿時提示轉橫 */
-  .rotate { display: none; }
   .fs-btn { display: none; }
   @media (pointer: coarse) and (orientation: landscape) {
     main { padding: 0; max-width: none; }
@@ -55,15 +54,15 @@
     .fs-btn { display: block; position: fixed; right: 10px; top: 10px; z-index: 10; font: inherit; font-size: 13px;
       padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--ink); opacity: .85; }
   }
-  @media (pointer: coarse) and (orientation: portrait) {
-    .rotate { display: flex; position: fixed; inset: 0; z-index: 20; background: var(--bg); color: var(--ink);
-      align-items: center; justify-content: center; flex-direction: column; gap: 10px; text-align: center; padding: 24px; }
-    .rotate .icon { font-size: 54px; }
-  }
+  /* 直式手機版：整個畫面都是遊戲 */
+  body.portrait main { padding: 0; max-width: none; }
+  body.portrait h1, body.portrait p.sub, body.portrait .bar, body.portrait .grid, body.portrait footer { display: none; }
+  body.portrait #game { width: 100vw; height: 100vh; height: 100dvh; aspect-ratio: auto; border-radius: 0; border: 0; background: #efe5d8; }
+  body.portrait .fs-btn { display: none; }
+  body.portrait { overscroll-behavior: none; touch-action: none; }
 </style>
 </head>
 <body>
-<div class="rotate"><div class="icon">📱↻</div><div style="font-size:18px;font-weight:700">請把手機轉橫</div><div style="color:var(--muted);font-size:14px">阿光的房間是橫的，轉橫才玩得到全部</div></div>
 <button class="fs-btn" id="fs">全螢幕</button>
 <main>
   <h1>阿光的秘密任務 · 臥室互動</h1>
@@ -138,10 +137,19 @@
 <script>
   (async () => {
     try { await document.fonts.load('16px "Zen Maru Gothic"'); } catch (e) {}
+    // 手機直拿（或電腦加 ?portrait=1）：畫布改成直的，寬 941、高照螢幕比例
+    const qs = new URLSearchParams(location.search);
+    const coarse = window.matchMedia && matchMedia('(pointer: coarse)').matches;
+    const portrait = (coarse && qs.get('touch') !== '0' && innerHeight > innerWidth) || qs.get('portrait') === '1';
+    if (portrait) { document.body.classList.add('portrait'); if (qs.get('portrait') === '1' && !qs.get('touch')) window.SUNLIGHT_TOUCH = true; }
+    const GW = portrait ? 941 : 1672, GH = portrait ? Math.round(941 * Math.min(2.4, Math.max(1.5, innerHeight / innerWidth))) : 941;
+    // 轉向的時候重新整理，換成另一種版面
+    let wasPortrait = innerHeight > innerWidth;
+    addEventListener('resize', () => { const now = innerHeight > innerWidth; if (coarse && now !== wasPortrait) location.reload(); wasPortrait = now; });
     const game = new Phaser.Game({
-      type: Phaser.AUTO, parent: 'game', width: 1672, height: 941,
+      type: Phaser.AUTO, parent: 'game', width: GW, height: GH,
       backgroundColor: '#f4efe8', roundPixels: false,
-      scale: { mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_HORIZONTALLY },
+      scale: { mode: Phaser.Scale.FIT, autoCenter: portrait ? Phaser.Scale.CENTER_BOTH : Phaser.Scale.CENTER_HORIZONTALLY },
       scene: [BedroomScene, OwnerTest, MovementTest],
     });
     game.registry.set('debug', false);

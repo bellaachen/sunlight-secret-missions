@@ -13,8 +13,11 @@ const STAGE_UI = {
 };
 
 class MissionHUD {
-  constructor(scene, { mission, alert, params, W, H }) {
+  constructor(scene, { mission, alert, params, W, H, portrait = false }) {
     this.s = scene; this.m = mission; this.a = alert; this.p = params; this.W = W; this.H = H;
+    this.portrait = portrait;
+    this.cardDY = portrait ? 132 : 0;      // 直式：任務卡往下移，讓出上方的警覺值條
+    if (portrait) this.p = { ...params, lens: { ...params.lens, x: W - 140, y: 300 } };   // 直式：近景圓移到房間右上
     this.lensAlpha = 0; this.zTimer = 0; this.napZTimer = 0; this.t = 0;
     this.buildCard();
     this.buildMeter();
@@ -36,9 +39,9 @@ class MissionHUD {
     this.pillG = this.s.add.graphics().setDepth(9000);
     this.pillText = this.text(46, 35, '', 20, '#4a3328', true);
     this.cardG = this.s.add.graphics().setDepth(9000);
-    this.cardTitle = this.text(46, 96, '🐾 今晚的秘密任務', 21, '#4a3328', true);
-    this.cardCount = this.text(0, 98, '', 19, '#a07e68', true);
-    this.cardName = this.text(46, 128, this.m.def.title, 25, '#3d2a22', true);
+    this.cardTitle = this.text(46, 96 + this.cardDY, '🐾 今晚的秘密任務', 21, '#4a3328', true);
+    this.cardCount = this.text(0, 98 + this.cardDY, '', 19, '#a07e68', true);
+    this.cardName = this.text(46, 128 + this.cardDY, this.m.def.title, 25, '#3d2a22', true);
     this.rows = this.m.steps.concat(this.m.bonus).map(() => this.text(0, 0, '', 19, '#4a3328'));
     this.cardParts = [this.cardG, this.cardTitle, this.cardCount, this.cardName, ...this.rows];
     this.pillParts = [this.pillG, this.pillText];
@@ -50,8 +53,8 @@ class MissionHUD {
   }
 
   drawCard(dt, cat, location) {
-    const m = this.m, x = 24, y = 84, w = 440;
-    const rowsY = 172, rowH = 34, n = this.rows.length;
+    const m = this.m, x = 24, y = 84 + this.cardDY, w = 440;
+    const rowsY = 172 + this.cardDY, rowH = 34, n = this.rows.length;
     const h = rowsY - y + n * rowH + 14;
     const cur = m.current;
     const done = m.steps.filter(s => s.done).length;
@@ -71,6 +74,8 @@ class MissionHUD {
 
     // 阿光碰到就變淡
     const b = cat.sprite.getBounds();
+    // 直式：介面和房間是不同鏡頭，座標不能直接比 → 用阿光在螢幕上的位置
+    if (this.portrait) { const c = this.s.cameras.main, Z = this.s.UIZ; b.setTo(c.x / Z + (b.x - c.worldView.x) * c.zoom / Z, c.y / Z + (b.y - c.worldView.y) * c.zoom / Z, b.width * c.zoom / Z, b.height * c.zoom / Z); }
     const hitPill = Phaser.Geom.Intersects.RectangleToRectangle(b, pill);
     const hitCard = open && Phaser.Geom.Intersects.RectangleToRectangle(b, card);
     this.pillAlpha = Phaser.Math.Linear(this.pillAlpha, hitPill || hitCard ? 0.22 : 1, Math.min(1, dt / 120));
@@ -106,7 +111,7 @@ class MissionHUD {
 
   drawMeter() {
     const P = this.p, v = this.a.value, st = STAGE_UI[this.a.stage];
-    const bw = 280, x0 = this.W / 2 - 250, y0 = 22;
+    const bw = this.portrait ? 250 : 280, x0 = this.portrait ? 24 : this.W / 2 - 250, y0 = this.portrait ? 84 : 22;
     this.meterLabel.setPosition(x0 + 22, y0 + 12);
     const bx = x0 + 22 + this.meterLabel.width + 16;
     const g = this.meterG.clear();
@@ -186,6 +191,7 @@ class MissionHUD {
 
   float(x, y, str, color = '#fffaf3', size = 26) {
     const t = this.text(x, y, str, size, color, true, 9400).setOrigin(0.5).setStroke('#4a3328', 5);
+    t.worldUI = true;   // 飄字跟著房間位置（直式時畫在房間鏡頭）
     this.s.tweens.add({ targets: t, y: y - 50, alpha: 0, duration: 1100, ease: 'Sine.Out', onComplete: () => t.destroy() });
   }
 
