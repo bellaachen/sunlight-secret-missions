@@ -1,0 +1,9 @@
+I1 Pack — Laptop interaction assets
+
+desk_no_laptop.png — 680 × 320 px
+laptop_open.png — 320 × 256 px
+laptop_close_00.png — 320 × 256 px
+laptop_close_01.png — 320 × 256 px
+laptop_close_02.png — 320 × 256 px
+laptop_close_03.png — 320 × 256 px
+laptop_closed.png — 320 × 256 px
