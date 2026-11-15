@@ -10,6 +10,10 @@
 
 打包成單一 HTML 檔：`python3 tools/build_single_file.py index.html dist/index.html`（公開版）、`python3 tools/build_single_file.py dev.html dist/dev.html`（開發版）。
 
+## 滑鼠操作（電腦，測試中，只在 dev.html）
+- 電腦版也載入 TapNav：滑鼠點地板走過去、點家具自動走過去跳上去、走路時點阿光停下；鍵盤照舊可用，一按方向鍵就取消滑鼠的目的地；編輯模式時點擊不會移動阿光
+- **Shift 改成按一下開／關潛行**（公開版也是）；開著時右下顯示「🐾 潛行中」
+
 ## 手機版（測試中，只在 dev.html）
 - `src/TapNav.js`：「點哪走哪」——點地板走過去（A* 繞過家具）、點家具自動走到觸發圈再跳（會自動先上椅子再上書桌這類規則）、點床／書桌上的位置跳上去再走過去、點水杯自動上床推倒、走路時點阿光停下、點泡泡馬上跳、點任務膠囊展開任務卡、右下「潛行」鈕切換潛行
 - 啟用條件：`window.SUNLIGHT_TOUCH = 'auto'`（dev.html 已設定）且是觸控裝置；電腦上用 `dev.html?touch=1` 用滑鼠測，`?touch=0` 強制關

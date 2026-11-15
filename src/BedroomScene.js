@@ -205,7 +205,14 @@ class BedroomScene extends Phaser.Scene {
     this.setupMission();
     this.refreshStatus();
     if (!this.play && !this.touch && typeof LayoutEditor !== 'undefined') this.editor = new LayoutEditor(this);
-    if (this.touch) this.tapNav = new TapNav(this);
+    // 電腦版也可以用滑鼠「點哪走哪」（鍵盤照舊可以用）；公開版沒載入 TapNav.js 就不會有
+    this.mouseNav = !this.touch && typeof TapNav !== 'undefined' && window.SUNLIGHT_MOUSE !== false;
+    if (this.touch || this.mouseNav) this.tapNav = new TapNav(this);
+    // Shift 按一次＝開潛行、再按一次＝關（不用一直按著）；手機用右下的潛行鈕
+    this.sneakOn = false;
+    this.sneakChip = this.add.text(this.VW - 24, this.VH - 46, '🐾 潛行中', { fontFamily: UI_FONT, fontSize: '22px', color: '#fff8ee', fontStyle: '700' })
+      .setOrigin(1, 0.5).setPadding(16, 8, 16, 8).setBackgroundColor('#7a5a8ccc').setDepth(9001).setVisible(false);
+    this.input.keyboard.on('keydown-SHIFT', () => this.setSneak(!this.sneakOn));
     if (this.portrait) this.setupPortrait();
     if (this.draftApplied) this.showToast('已套用編輯草稿（按 M 進入編輯模式可匯出或清除）');
   }
@@ -648,7 +655,12 @@ class BedroomScene extends Phaser.Scene {
   worldPoint(p) { const v = this.cameras.main.getWorldPoint(p.x, p.y); return { x: v.x, y: v.y }; }
   uiPoint(p) { return { x: p.x / this.UIZ, y: p.y / this.UIZ }; }
 
-  isSneaking() { return this.keys.SHIFT.isDown || !!(this.tapNav && this.tapNav.sneak); }
+  setSneak(on) {
+    this.sneakOn = on;
+    if (this.tapNav) this.tapNav.drawButton(); else this.sneakChip.setVisible(on);
+    this.showToast(on ? '潛行：開（走得慢、比較安靜）' : '潛行：關');
+  }
+  isSneaking() { return this.sneakOn; }
 
   /* ---------- 每幀 ---------- */
   update(_, dt) {
@@ -672,6 +684,8 @@ class BedroomScene extends Phaser.Scene {
     }
     // Shift 潛行（手機：右下的潛行鈕）：走得比較慢，在床上讓警覺值上升得比較少
     const sneak = this.isSneaking();
+    // 用鍵盤走路 → 取消滑鼠／觸控的目的地
+    if (this.tapNav && this.tapNav.goal && [k.W, k.A, k.S, k.D, k.UP, k.DOWN, k.LEFT, k.RIGHT].some(x => x.isDown)) this.tapNav.stop();
     if (this.tapNav) this.tapNav.update(dt);
     cat.speedMul = sneak ? 0.45 : 1;
     cat.update(dt);
@@ -723,8 +737,8 @@ class BedroomScene extends Phaser.Scene {
       ? (locked ? '🔒 ' + locked : this.portrait ? '點地板走過去・點家具跳上去・點阿光停下' : '點地板＝走過去　·　點家具＝跳上去　·　點阿光＝停下　·　點泡泡＝馬上跳')
       : parts.length ? parts.join('　　')
       : (locked ? '🔒 ' + locked : (this.play ? 'WASD／方向鍵 移動　·　Shift 潛行　·　Space 跳躍　·　E 互動　·　Tab 任務' : 'WASD／方向鍵 移動　·　Shift 潛行　·　Space 跳躍　·　E 互動　·　Tab 任務　·　B Debug　·　M 編輯'));
-    if (this.level === 'bed' && parts.length && !this.touch) barStr += '　　（Shift 潛行比較不會吵醒主人）';
-    if (this.level === 'bed' && this.touch && !this.tapNav.sneak) barStr = this.portrait ? '在床上記得開「潛行」，比較不會吵醒主人' : '在床上記得開右下的「潛行」，比較不會吵醒主人';
+    if (this.level === 'bed' && parts.length && !this.touch) barStr += this.sneakOn ? '　　🐾 潛行中' : '　　（按 Shift 開潛行，比較不會吵醒主人）';
+    if (this.level === 'bed' && this.touch && !this.sneakOn) barStr = this.portrait ? '在床上記得開「潛行」，比較不會吵醒主人' : '在床上記得開右下的「潛行」，比較不會吵醒主人';
     if (this.busy) barStr = '…';
     this.bar.setText(barStr);
     const bw = this.bar.width + 56;

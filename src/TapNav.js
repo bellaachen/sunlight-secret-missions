@@ -20,7 +20,6 @@ class TapNav {
     this.s = scene;
     this.goal = null;      // { type: 'walk' | 'level' | 'item', level, x, y, zone }
     this.path = null;      // 目前平台上的路線（世界座標點）
-    this.sneak = false;
     this.cache = new Map();
     this.stuckT = 0;
     this.buildUI();
@@ -46,17 +45,18 @@ class TapNav {
     this.drawButton();
   }
   drawButton() {
-    const b = this.btn, on = this.sneak;
+    const b = this.btn, on = this.s.sneakOn;
     this.btnG.clear().fillStyle(on ? 0x7a5a8c : 0xfffaf3, on ? 0.92 : 0.9).fillRoundedRect(b.x, b.y, b.w, b.h, 30);
-    this.btnText.setText(on ? '🐾 潛行中' : '🐾 潛行').setColor(on ? '#fff8ee' : '#4a3328');
+    this.btnText.setText((on ? '🐾 潛行中' : '🐾 潛行') + (this.s.touch ? '' : '\n（Shift）')).setColor(on ? '#fff8ee' : '#4a3328');
   }
   inBtn(x, y) { const b = this.btn; return x > b.x && x < b.x + b.w && y > b.y && y < b.y + b.h; }
 
   /* ---------------- 點擊 ---------------- */
   onTap(p) {
+    if (this.s.registry.get('editor') || (p.event && p.event.button === 2)) return;   // 編輯模式、右鍵不算
     const s = this.s, cat = s.cat.sprite, u = s.uiPoint(p), { x, y } = s.worldPoint(p);
     if (s.ended) { if (s.endReady) s.scene.restart(); return; }
-    if (this.inBtn(u.x, u.y)) { this.sneak = !this.sneak; this.drawButton(); return; }
+    if (this.inBtn(u.x, u.y)) { s.setSneak(!s.sneakOn); return; }
     const hud = s.hud;
     if (hud.pillRect && Phaser.Geom.Rectangle.Contains(hud.pillRect, u.x, u.y)) { hud.expandUntil = hud.t + 4000; return; }
     // 直式：點在上下兩條介面區（房間外面）→ 不動
