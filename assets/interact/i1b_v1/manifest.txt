@@ -1,0 +1,9 @@
+I1b Pack — Laptop Lid Animation
+Canvas: 680 × 320 px
+Color: RGB, fully opaque
+
+laptop_lid_00.png	680 × 320
+laptop_lid_01.png	680 × 320
+laptop_lid_02.png	680 × 320
+laptop_lid_03.png	680 × 320
+laptop_lid_closed.png	680 × 320
