@@ -32,7 +32,8 @@ class LayoutEditor {
 
   static cleanJSON(cfg, pick = null) {
     const src = pick ? Object.fromEntries(pick.map(k => [k, cfg[k]])) : cfg;
-    return JSON.stringify(src, (k, v) => (k === 'pts' || k === 'blockedPts') ? undefined : v, 1);
+    // _runtime：執行時才加進來的東西（房間互動的互動點、加分任務），不寫回 scene_config.json
+    return JSON.stringify(src, (k, v) => (k === 'pts' || k === 'blockedPts') ? undefined : Array.isArray(v) ? v.filter(x => !(x && x._runtime)) : v, 1);
   }
 
   constructor(scene) {

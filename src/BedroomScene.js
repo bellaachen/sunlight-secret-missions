@@ -69,6 +69,7 @@ class BedroomScene extends Phaser.Scene {
   preload() {
     preloadSunLight(this);
     preloadOwner(this);
+    if (typeof Interactables !== 'undefined') Interactables.preload(this);   // 房間互動（只有 dev.html 有載入）
     const BIN = window.SUNLIGHT_BEDROOM_INLINE;
     // 床頭櫃的馬克杯（E 包：0 立著、1～6 倒下、7 倒在地上；128×128，杯底在 (64,112)）
     if (!this.textures.exists('cup')) {
@@ -202,6 +203,8 @@ class BedroomScene extends Phaser.Scene {
       padding: { x: 12, y: 10 }, align: 'left', lineSpacing: 4,
     }).setOrigin(0, 1).setDepth(9600);
 
+    // 房間互動（筆電、檯燈、玩具）：要在任務建立前加入加分項目
+    this.props = typeof Interactables !== 'undefined' && window.SUNLIGHT_INTERACT_INLINE ? new Interactables(this) : null;
     this.setupMission();
     this.refreshStatus();
     if (!this.play && !this.touch && typeof LayoutEditor !== 'undefined') this.editor = new LayoutEditor(this);
@@ -464,11 +467,13 @@ class BedroomScene extends Phaser.Scene {
         if (d < 1 && (!best || d < best.d)) best = { z, d };
       }
       if (best) up.push({ label: best.z.label, zone: best.z, to: best.z.level, target: this.nearestLand(best.z.target), kind: best.z.type });
+      if (this.props) items.push(...this.props.floorItems());   // 地上的玩具
       return { up, down, items };
     }
     const L = cfg.levels[lv] || {};
     for (const z of cfg.zones.filter(z => (z.requires || []).includes(lv))) {
       if (!this.inReach((z.approachFrom || {})[lv])) continue;
+      if (z.type === 'interact' && this.props && this.props.isDone(z)) continue;   // 已經做過的（筆電闔上了、檯燈倒了）
       const target = (z.targetFrom || {})[lv] || z.target;
       if (z.type === 'interact') items.push({ label: z.label, zone: z, kind: 'interact' });
       else up.push({ label: z.label, zone: z, to: z.level, target, kind: z.type });
@@ -551,6 +556,7 @@ class BedroomScene extends Phaser.Scene {
   /* ---------- 跳躍／爬進去（目前沒有跳躍 sprite → 位置弧線過渡） ---------- */
   perform(act) {
     if (act.kind === 'interact') {
+      if (this.props && this.props.perform(act)) return;
       if (act.zone && act.zone.id === 'water') this.knockCup();
       else this.showToast('🐾 ' + act.label);
       return;
@@ -689,6 +695,7 @@ class BedroomScene extends Phaser.Scene {
     if (this.tapNav) this.tapNav.update(dt);
     cat.speedMul = sneak ? 0.45 : 1;
     cat.update(dt);
+    if (this.props) this.props.update(dt);
     if (!this.busy) s.anims.timeScale = sneak && cat.moving ? 0.6 : 1;
     if (this.level === 'pet_bed' || this.level === 'tower_1') cat.shadow.setVisible(false);
     this.updateMission(dt);

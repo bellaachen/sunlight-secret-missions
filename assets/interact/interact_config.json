@@ -1,0 +1,27 @@
+{
+  "_note": "房間互動（I 系列）：只在 dev.html 載入（src/Interactables.js）。座標都是房間大圖的座標。",
+  "desk": { "x": 520, "y": 240, "w": 340, "h": 160 },
+  "rug": { "x": 700, "y": 660, "w": 480, "h": 180 },
+  "zones": [
+    { "id": "laptop", "type": "interact", "label": "闔上筆電（★加分）", "bonus": "laptop",
+      "point": { "x": 728, "y": 322 }, "radius": 62, "requires": ["desk"],
+      "approachFrom": { "desk": { "x": 684, "y": 382, "radius": 46 } } },
+    { "id": "lamp", "type": "interact", "label": "推倒檯燈（★加分，很吵）", "bonus": "lamp",
+      "point": { "x": 592, "y": 318 }, "radius": 58, "requires": ["desk"],
+      "approachFrom": { "desk": { "x": 640, "y": 386, "radius": 44 } } }
+  ],
+  "toys": [
+    { "id": "fish", "label": "把魚撥出去", "x": 901, "y": 710, "angle": 6, "speed": 470, "spin": 620, "reach": 78 },
+    { "id": "yarn", "label": "把毛線球撥出去", "x": 796, "y": 776, "angle": 0, "scaleY": 0.88, "speed": 580, "roll": 30, "reach": 82 },
+    { "id": "feather", "label": "把逗貓棒撥出去", "x": 1058, "y": 791, "angle": -3, "speed": 360, "spin": 460, "reach": 90 }
+  ],
+  "friction": 2.4,
+  "gain": { "laptop": 12, "lamp": 25, "toy": 3 },
+  "bonus": [
+    { "id": "laptop", "text": "闔上書桌的筆電", "points": 30 },
+    { "id": "lamp", "text": "推倒貓咪檯燈", "points": 50 },
+    { "id": "toys", "text": "把地上三個玩具都撥出去", "points": 30 }
+  ],
+  "titleAll": "深夜破壞王",
+  "dim": { "x": 600, "y": 300, "rx": 330, "ry": 260, "alpha": 0.32 }
+}

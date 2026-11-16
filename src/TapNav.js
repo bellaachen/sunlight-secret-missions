@@ -77,9 +77,16 @@ class TapNav {
   /** 點到的東西是什麼 */
   interpret(x, y) {
     const s = this.s, cfg = s.cfg;
-    // 水杯
-    const cup = cfg.zones.find(z => z.type === 'interact');
-    if (cup && cfg.cup && Math.hypot(x - cfg.cup.stand.x, y - (cfg.cup.stand.y - 20)) < 60 && !(s.missionMgr.bonus.find(b => b.id === 'cup') || {}).done) return { type: 'item', zone: cup, mx: cfg.cup.stand.x, my: cfg.cup.stand.y };
+    // 物品：水杯、筆電、檯燈（做過的就不算）
+    for (const z of cfg.zones.filter(z => z.type === 'interact')) {
+      const cup = z.id === 'water' && cfg.cup;
+      const p = cup ? { x: cfg.cup.stand.x, y: cfg.cup.stand.y - 20 } : z.point, r = cup ? 60 : (z.radius || 60);
+      const done = s.props ? s.props.isDone(z) : !!(s.missionMgr.bonus.find(b => b.id === 'cup') || {}).done;
+      if (p && !done && Math.hypot(x - p.x, y - p.y) < r) return { type: 'item', zone: z, mx: cup ? cfg.cup.stand.x : p.x, my: cup ? cfg.cup.stand.y : p.y };
+    }
+    // 地上的玩具
+    const toy = s.props && s.props.toyAt(x, y);
+    if (toy) return { type: 'toy', toy, mx: toy.x, my: toy.y };
     // 可以走的平台（床、書桌、書櫃頂端）：點在上面 → 走到那個位置
     for (const [lv, L] of Object.entries(cfg.levels)) {
       const w = s.walkOf(lv);
@@ -112,6 +119,14 @@ class TapNav {
     if (!this.goal || s.busy || s.ended) return;
     const g = this.goal, lv = s.level;
 
+    if (g.type === 'toy') {
+      if (lv !== 'floor') return this.hopToward('floor');
+      const it = s.props.itemFor(g.toy);
+      if (it) { this.stop(); s.perform(it); return; }
+      // 走到玩具「這一側」：從阿光看過去，停在玩具前面一點
+      const c = cat.sprite, dx = g.toy.x - c.x, dy = g.toy.y - c.y, d = Math.hypot(dx, dy) || 1, r = g.toy.reach * 0.55;
+      return this.walkTo(g.toy.x - dx / d * r, g.toy.y - dy / d * r, dt, 10);
+    }
     if (g.type === 'item') {
       const req = g.zone.requires || [];
       if (req.includes(lv)) {

@@ -91,7 +91,8 @@ class MissionManager extends Phaser.Events.EventEmitter {
     const T = this.def.titles || {};
     let title = null;
     if (this.state === 'success') {
-      if (this.isDone('cup')) title = T.cup;
+      if (this.def.allTitle && this.bonus.length > 1 && this.bonus.every(b => b.done)) title = this.def.allTitle;   // 房間互動全部做完
+      else if (this.isDone('cup')) title = T.cup;
       else if (alert && !alert.everRestless) title = T.quiet;
       else title = T.base;
     }
