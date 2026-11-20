@@ -77,7 +77,7 @@ class BedroomScene extends Phaser.Scene {
       this.load.image('water_spill', BIN ? BIN.images.water_spill : 'assets/cup/water_spill.webp');
     }
     // 阿光在腳邊捲成一團睡覺（D 包：0～5 趴下捲起來、6～9 呼吸循環；256×256，身體最低點 y=240）
-    if (!this.textures.exists('sun_nap')) this.load.spritesheet('sun_nap', BIN ? BIN.images.sunlight_nap : 'assets/sunlight_nap/sunlight_nap.webp', { frameWidth: 256, frameHeight: 256 });
+    if (!this.textures.exists('sun_nap')) this.load.spritesheet('sun_nap', window.SSM_CAT && window.SSM_CAT.id ? 'assets/cats/' + window.SSM_CAT.id + '_nap.webp' : BIN ? BIN.images.sunlight_nap : 'assets/sunlight_nap/sunlight_nap.webp', { frameWidth: 256, frameHeight: 256 });
     // 房間裡床上的主人（C 包全景圖層，裁到人物範圍）
     if (!this.textures.exists('oscene_sleeping')) {
       const SM = BIN ? BIN.ownerScene : null;
@@ -741,7 +741,7 @@ class BedroomScene extends Phaser.Scene {
     const parts = opts.up.concat(opts.down).map(o => `${this.hintFor(opts, o)}  ${o.label}`);
     if (item) parts.push(`E  ${item.label}`);
     let barStr = this.touch
-      ? (locked ? '🔒 ' + locked : this.portrait ? '點地板走過去・點家具跳上去・點阿光停下' : '點地板＝走過去　·　點家具＝跳上去　·　點阿光＝停下　·　點泡泡＝馬上跳')
+      ? (locked ? '🔒 ' + locked : this.portrait ? '點地板走過去・點家具跳上去・點' + (typeof ssmCatName === 'function' ? ssmCatName() : '阿光') + '停下' : '點地板＝走過去　·　點家具＝跳上去　·　點' + (typeof ssmCatName === 'function' ? ssmCatName() : '阿光') + '＝停下　·　點泡泡＝馬上跳')
       : parts.length ? parts.join('　　')
       : (locked ? '🔒 ' + locked : (this.play ? 'WASD／方向鍵 移動　·　Shift 潛行　·　Space 跳躍　·　E 互動　·　Tab 任務' : 'WASD／方向鍵 移動　·　Shift 潛行　·　Space 跳躍　·　E 互動　·　Tab 任務　·　B Debug　·　M 編輯'));
     if (this.level === 'bed' && parts.length && !this.touch) barStr += this.sneakOn ? '　　🐾 潛行中' : '　　（按 Shift 開潛行，比較不會吵醒主人）';

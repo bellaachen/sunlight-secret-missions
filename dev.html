@@ -141,10 +141,13 @@
 <script src="src/TapNav.js"></script>
 <script src="src/Interactables.js"></script>
 <script src="src/BedroomScene.js"></script>
+<script src="src/CatSelect.js"></script>
 <script src="src/OwnerTest.js"></script>
 <script>
   (async () => {
     try { await document.fonts.load('16px "Zen Maru Gothic"'); } catch (e) {}
+    // 選貓＋取名：第一次玩才會出現（?pick=1 或右上「換貓・改名」可以重選）
+    if (typeof CatSelect !== 'undefined') await CatSelect.run();
     // 手機直拿（或電腦加 ?portrait=1）：畫布改成直的，寬 941、高照螢幕比例
     const qs = new URLSearchParams(location.search);
     const coarse = window.matchMedia && matchMedia('(pointer: coarse)').matches;

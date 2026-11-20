@@ -16,7 +16,9 @@ const SUN_ANIMS = {
 function preloadSunLight(scene, base = 'assets/') {
   if (scene.textures.exists('sunlight')) return;
   const inline = window.SUNLIGHT_INLINE; // 單檔版會把圖與 JSON 內嵌
-  if (inline) scene.load.atlas('sunlight', inline.png, inline.json);
+  const pick = window.SSM_CAT;          // 玩家選的貓（CatSelect.js）：4 隻共用同一份 JSON 格子
+  if (pick && pick.id) scene.load.atlas('sunlight', base + 'cats/' + pick.id + '_atlas.png', base + 'sunlight_atlas.json');
+  else if (inline) scene.load.atlas('sunlight', inline.png, inline.json);
   else scene.load.atlas('sunlight', base + 'sunlight_atlas.png', base + 'sunlight_atlas.json');
 }
 

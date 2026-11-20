@@ -241,7 +241,7 @@ class MissionHUD {
     const g = this.s.add.graphics().setDepth(9620).fillStyle(0xfffaf3, 0.98).fillRoundedRect(x, y, w, h, 30);
     const objs = [g];
     objs.push(this.text(this.W / 2, y + 48, '任務完成！', 40, '#4a3328', true, 9621).setOrigin(0.5));
-    objs.push(this.text(this.W / 2, y + 96, '阿光在主人腳邊睡著了 💤', 22, '#8a6a58', false, 9621).setOrigin(0.5));
+    objs.push(this.text(this.W / 2, y + 96, (typeof ssmCatName === 'function' ? ssmCatName() : '阿光') + '在主人腳邊睡著了 💤', 22, '#8a6a58', false, 9621).setOrigin(0.5));
     let yy = y + 140;
     g.lineStyle(1.5, 0xe6dccf, 1).lineBetween(x + 40, yy - 12, x + w - 40, yy - 12);
     for (const [label, pts] of r.lines) {
